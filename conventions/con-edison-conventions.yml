@@ -1,0 +1,150 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+also_derived_from: openapi/con-edison-green-button-connect-my-data-swagger.json
+docs: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+api: Con Edison Green Button Connect My Data API
+summary: >-
+  Cross-cutting request/response semantics for Con Edison's Green Button Connect My Data (ESPI 1.1)
+  API, transcribed from the Third-Party Technical Onboarding Document v4.4 and derived from the
+  published Swagger 2.0 definition. The API is an implementation of the NAESB REQ.21 ESPI model
+  business practice, so most conventions are the standard's rather than Con Edison's invention; the
+  Con Edison-specific parts (rate limit, batch retention, real-time extension, DST interval counts,
+  powerOfTenMultiplier values) are called out.
+authentication:
+  style: OAuth 2.0 Bearer token (RFC 6750) on every /resource/* call
+  token_endpoint_auth: HTTP Basic base64(client_id:client_secret)
+  detail: authentication/con-edison-authentication.yml
+  scopes: scopes/con-edison-scopes.yml
+media_types:
+  request: [application/x-www-form-urlencoded (token endpoint), application/json (token endpoint)]
+  response: [application/atom+xml, application/xml, text/xml, application/json, text/json]
+  primary: Atom/ESPI XML — resources are Atom feeds of <entry> elements whose <content> carries espi:* elements
+  namespaces:
+    espi: http://naesb.org/espi
+idempotency:
+  key_header: null
+  supported: false
+  note: >-
+    No Idempotency-Key header or equivalent is documented. Nearly the whole surface is GET (36 of 37
+    operations), so replays are naturally safe. For the asynchronous Batch resources Con Edison does
+    document request de-duplication: "TPs should avoid sending duplicate batch requests while one is
+    still pending. The GBC platform will reject duplicate requests" and "if within two days, batch
+    request is called multiple times with same parameter values, API will respond with the cached
+    response that was prepared for the original request." That is parameter-keyed de-duplication with
+    a two-day cached-response window, not a client-supplied idempotency key.
+pagination:
+  style: espi-atom-feed
+  params:
+  - name: startIndex
+    in: query
+    type: integer
+    note: offset-style start index, present on 15 collection operations in the Swagger definition
+  - name: published-min
+    in: query
+    type: string
+    note: ISO-8601 UTC lower bound on publication time; required on the Batch bulk operation
+  - name: published-max
+    in: query
+    type: string
+    note: ISO-8601 UTC upper bound on publication time
+  - name: publishedMin
+    in: query
+    note: camelCase variant used on the real-time batch operations
+  - name: publishedMax
+    in: query
+    note: camelCase variant used on the real-time batch operations
+  - name: updatedMin
+    in: query
+  - name: updatedMax
+    in: query
+  response_fields: [Feed.Entry, Feed.Link (rel=self/up/related)]
+  inconsistency: >-
+    The published contract uses BOTH hyphenated (published-min/published-max) and camelCase
+    (publishedMin/publishedMax/updatedMin/updatedMax) query parameter spellings depending on the
+    resource family. Callers must follow the per-operation spelling in the Swagger definition.
+time_handling:
+  timezone: >-
+    "API queries must always use UTC timestamps, calculated from local start/end times using the
+    correct offset (UTC-5 for EST, UTC-4 for EDT)."
+  dst_interval_counts:
+    normal_day: 288 five-minute intervals
+    dst_start_day: 276 five-minute intervals (23-hour day)
+    dst_end_day: 300 five-minute intervals (25-hour day)
+  published_examples:
+  - DST in effect (Sept 15, 2025) — published-Min=2025-09-15T04:00:00Z&published-Max=2025-09-16T04:00:00Z
+  - DST not in effect (Feb 15, 2025) — published-Min=2025-02-15T05:00:00Z&published-Max=2025-02-16T05:00:00Z
+  - DST ended (Nov 3, 2024) — published-Min=2024-11-03T04:00:00Z&published-Max=2024-11-04T05:00:00Z
+  - DST started (Mar 9, 2025) — published-Min=2025-03-09T05:00:00Z&published-Max=2025-03-10T04:00:00Z
+  interval_reading_time: espi:timePeriod/espi:start is a Unix epoch second; espi:duration is interval length in seconds
+value_scaling:
+  rule: Actual Consumption = IntervalReading.value x (10 ^ powerOfTenMultiplier)
+  declared_on: ReadingType
+  con_edison_values:
+    electric_power_of_ten_multiplier: 3
+    gas_power_of_ten_multiplier: 0
+  units_of_measure:
+    '72': Real energy, Watt hours (Wh)
+    '119': Volume, cubic feet (ft3) — gas consumption unit of measurement is CCF
+  quality_of_reading:
+    '17': good and validated data
+async_batch:
+  pattern: request-then-notify
+  accepted_status: 202
+  detail: >-
+    The Data Custodian accepts the batch request with HTTP 202, assembles the data, then POSTs a
+    notification to the third party's registered notification endpoint containing a BatchList of
+    resource URLs. The URLs are XML-escaped (&amp;) inside the XML response and must be unescaped
+    before use.
+  chunking: responses larger than 200 MB are chunked into multiple files
+  retention: resource URIs must be called within 2 days of notification; after that the batch response is deleted
+  typical_latency: notifications usually within one hour; up to 24 hours under heavy load
+  duplicate_handling: duplicate batch requests are rejected while one is pending; repeats with identical parameters within 2 days return the cached response
+  webhooks: asyncapi/con-edison-batch-notification-webhooks.yml
+versioning:
+  scheme: uri-path
+  current: /gbc/espi/1_1 (ESPI 1.1)
+  spec_title: DCX GBC API V2
+  standard_version: Green Button Connect My Data (GBC) V3.3
+  documented_extension: >-
+    "Connect my data will continue to support real time APIs even though they are not part of the
+    GBC V3.3 Standard." — the /resource/RealTime/* family is an explicit, documented extension.
+  detail: lifecycle/con-edison-lifecycle.yml
+error_envelope:
+  format: vendor-json
+  shape: '{"Message": "<text>"}'
+  observed_example: '{"Message":"Unauthorized. Access token is missing or invalid."}'
+  oauth_errors: returned as redirect query parameters — error=access_denied&error_description=...&state=...
+  rfc9457: false
+  detail: errors/con-edison-problem-types.yml
+rate_limiting:
+  token_endpoint: 50 token API calls per minute (excluding the authorization_code flow)
+  other_endpoints: no rate limit currently in place
+  headers: none documented
+  detail: rate-limits/con-edison-rate-limits.yml
+caching:
+  requirement: >-
+    Access tokens must be cached and reused for the full hour. Con Edison recommends storing a
+    timestamp alongside the token to detect expiry before calling.
+request_tracing:
+  request_id_header: none documented
+  issue_reporting: email dlsharemydatatech@coned.com
+data_bounds:
+  history: up to 2 years from the current date (HistoryLength=63072000)
+  real_time: last 24 hours, electric only, 45-minute latency, "not billing quality"; not applicable to gas service
+  granularity:
+    electric_commercial_ami: 5-minute intervals
+    electric_residential_ami: 15-minute intervals
+    electric_legacy_interval_meters: 15-minute intervals
+    gas_ami: 1-hour intervals
+    non_interval_meters: monthly
+  availability_targets:
+  - 80-90% of interval data within 24 hours
+  - 99% within 3 days
+  - 99.8% within 7 days
+  solar_accounts: NET consumption is returned for solar accounts; consumption only for non-solar
+  esco_charges: included in BillLastPeriod in the billing information when applicable
+transport_security:
+  tls: TLS 1.2 or higher required, including on all third-party URLs registered with Con Edison
+  https_only: true
+  probed: security/con-edison-domain-security.yml

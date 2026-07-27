@@ -1,0 +1,55 @@
+generated: '2026-07-27'
+method: probed
+source: live anonymous HTTP probes, 2026-07-27
+result: none — Con Edison publishes no /.well-known/ discovery surface on any host in this profile
+note: >-
+  Every conventional discovery document was probed on the API host, the test API host, the web host
+  and the ArcGIS host that serves the open grid data. All missed. This is recorded as verified absence,
+  not as an untested gap. No raw files were saved because nothing returned 200.
+hosts:
+- host: https://api.coned.com
+  role: Green Button Connect My Data production API (Azure API Management)
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://apit.coned.com
+  role: Green Button Connect My Data test API
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://www.coned.com
+  role: Corporate and customer site; carries the OAuth authorization screen at /en/oauth/authorize
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /llms.txt, status: 404}
+  - {path: /robots.txt, status: 200, note: allows all; declares sitemap_coned_en.xml, sitemap_coned_es.xml and the oru.com sitemap}
+- host: https://services.arcgis.com
+  role: Esri-hosted ArcGIS feature services carrying the open Hosting Capacity grid data (third-party infrastructure, not Con Edison's)
+  documents:
+  - {path: /.well-known/security.txt, status: 403}
+  - {path: /.well-known/openid-configuration, status: 403}
+  - {path: /.well-known/oauth-authorization-server, status: 403}
+  - {path: /.well-known/oauth-protected-resource, status: 403}
+  - {path: /.well-known/api-catalog, status: 403}
+  - {path: /.well-known/ai-plugin.json, status: 403}
+  note: The ArcGIS host rejects unrouted paths with 403 rather than 404; no discovery document is served.
+implications:
+  oauth_discovery: >-
+    OAuth endpoints are documented only in prose in the onboarding PDF — there is no machine-readable
+    authorization-server metadata. See authentication/con-edison-authentication.yml.
+  security_contact: >-
+    No RFC 9116 security.txt. The only published technical contact is dlsharemydatatech@coned.com,
+    which is an onboarding address, not a vulnerability-disclosure channel.

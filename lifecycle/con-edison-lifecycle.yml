@@ -1,0 +1,84 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+also_derived_from: openapi/con-edison-green-button-connect-my-data-swagger.json
+versioning:
+  scheme: uri-path
+  current: /gbc/espi/1_1
+  standard: NAESB REQ.21 Energy Services Provider Interface (ESPI) 1.1
+  spec_title: DCX GBC API V2
+  certification_suite_version: GBC Certification Third party V3.3 (published Postman collection)
+  policy_url: null
+  note: >-
+    Con Edison publishes no API versioning policy. The version signals available are the ESPI 1.1 base
+    path, the Swagger info.title "DCX GBC API V2" with info.version "v1", and the Green Button Connect
+    My Data V3.3 certification suite the Postman collection is named for.
+documentation_version:
+  document: Con Edison/Orange & Rockland Green Button Connect Third-Party Technical Onboarding Document
+  version: '4.4'
+  created: '2018-03-14'
+  last_updated: '2026-05-07'
+  url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation or sunset policy is published, and no operation in the Swagger definition is marked
+    deprecated. Changes are communicated by email through the onboarding team; third parties are told
+    not to alter or rename callback URLs without informing the team "as any changes will disrupt
+    existing integrations."
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No uptime SLA is published. The only quantified availability commitments are DATA availability
+    targets, not service availability.
+  data_availability_targets:
+  - 80-90% of interval data available within 24 hours
+  - 99% within 3 days
+  - 99.8% within 7 days
+  batch_response_times: typically within one hour; up to 24 hours under heavy load
+  real_time_latency: 45 minutes from request processing time, electric only, last 24 hours
+status_page: null
+status_surface:
+  operation: readServiceStatus
+  path: /resource/ReadServiceStatus
+  note: >-
+    The API exposes a service-status resource, but it is authenticated (HTTP 401 anonymously) and is
+    not a public status page. Con Edison publishes no developer status page and no incident feed;
+    production issues are reported by email to dlsharemydatatech@coned.com.
+environments:
+- name: production
+  api_base: https://api.coned.com/gbc/espi/1_1
+  authorization_base: https://www.coned.com/en/ (Con Edison), https://www.oru.com/en/ (Orange & Rockland)
+  probed_status: 401 (live, OAuth-guarded, 2026-07-27)
+- name: test
+  api_base: https://apit.coned.com/gbc/espi/1_1
+  authorization_base: https://uat10.coned.com/en/ (Con Edison), https://uat10.oru.com/en/ (Orange & Rockland)
+  probed_status: 401 (live, OAuth-guarded, 2026-07-27)
+  access: supervised — third parties cannot access the GBC test environment independently
+registration_lifecycle:
+  onboarding_duration: 30 to 60 days
+  testing_window_days: 90
+  abandonment: registration withdrawn after 90 days of no response to the welcome email or the Data Security Agreement
+  expiry: none — "your registration will remain valid indefinitely" once testing is complete
+  updates: resend the completed registration form with the changed fields to ShareMyDataTech@coned.com
+  termination: email ShareMyData@coned.com and ShareMyDataTech@coned.com; resuming requires restarting onboarding
+authorization_lifecycle:
+  customer_options:
+  - Until authorization is revoked
+  - Specific period of time
+  - One time (24-hour access)
+  inactivity_revocation_days: 365
+  revocation: customer can revoke at any time from the Con Edison or Orange & Rockland online account
+  access_token_seconds: 3600
+  refresh_token_expiry: 1 year of non-use
+  authorization_code_seconds: 60
+data_retention:
+  batch_response_days: 2
+  history_years: 2
+  real_time_window_hours: 24
+changelog: null
+roadmap: null

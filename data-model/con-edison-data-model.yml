@@ -1,0 +1,176 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+also_derived_from: openapi/con-edison-green-button-connect-my-data-swagger.json
+api: Con Edison Green Button Connect My Data API
+summary: >-
+  The entity graph is the NAESB REQ.21 ESPI model as Con Edison implements it. Section 3.6.1 of the
+  Third-Party Technical Onboarding Document v4.4 publishes an explicit "Key Relationships Between Data
+  Elements" table with cardinalities and worked examples — those rows are transcribed verbatim below.
+  The remaining relationships are derived from the path hierarchy and Swagger definitions of the
+  published contract. Resources are Atom feeds: a Feed carries Entries, each Entry has Links and a
+  Content element carrying the espi:* payload.
+identifiers:
+  subscriptionId: path key for every customer-scoped resource; issued per authorization
+  usagePointId: a service delivery point (meter location)
+  meterReadingId: a set of readings for one usage point
+  intervalBlockId: a time-bounded block of interval readings
+  readingTypeId: describes how a reading is measured (uom, powerOfTenMultiplier, flowDirection, commodity, intervalLength)
+  accountId: customer account
+  customerAgreementId: agreement covering a service (electric, gas)
+  serviceLocationId: physical service location
+  serialNumber: meter serial number
+  bulkId: bulk resource id, equal to the ApplicationInformation ID (the BR scope qualifier)
+  authorizationId: one customer authorization
+  applicationInformationId: the third-party application registration
+entities:
+- name: ApplicationInformation
+  description: The third-party application registration held by the data custodian — client credentials, OAuth endpoints, notify URIs, scope, grant types.
+  operations: [getThirdPartyApplicationById]
+  fields_sample: [ClientId, ClientSecret, Scope, GrantTypes, RedirectUri, ThirdPartyNotifyUri, AuthorizationChangeNotifyUri, AuthorizationServerTokenEndpoint, DataCustodianResourceEndpoint, RegistrationAccessToken]
+- name: Authorization
+  description: A customer's grant to a third party — status, scope, period, subscription, tokens.
+  operations: ['Get all Third Party Authorizations', 'Get Third Party Authorization by ID']
+  fields_sample: [Status, Scope, ExpiresAt, authorizePeriod, ApplicationInformationId, RetailCustomerId, subscriptions, AccountNumber, LastAccessedDateTime]
+- name: Subscription
+  description: The container the authorization produces; every usage resource hangs off a subscriptionId.
+  fields_sample: [Id, ApplicationInformationId, AuthorizationId, Published, Updated]
+- name: UsagePoint
+  description: A service delivery point (electric or gas) under the subscription.
+  operations: [getAllUsagePointsBySubscription, getUsagePointsForSubscription, getUsagePointBySubscriptionInBatch]
+- name: MeterReading
+  description: A set of readings for one usage point.
+  operations: [getAllMeterReadingsForUsagePointInSubscription, getMeterReadingForUsagePointInSubscription]
+- name: IntervalBlock
+  description: Time-bounded block of IntervalReading values with ReadingQuality and timePeriod.
+  operations: [getAllIntervalBlocksForUsagePointMeterReadingInSubscription, getIntervalBlocksForUsagePointMeterReadingInSubscription]
+- name: ReadingType
+  description: Measurement semantics — uom, powerOfTenMultiplier, commodity, flowDirection, accumulationBehaviour, intervalLength.
+  operations: [getAllReadingTypes, getReadingTypesById]
+- name: UsageSummary
+  description: Billing-period summary, including cost when FB=16 is authorized; ESCO charges roll into BillLastPeriod.
+  operations: [getAllElectricPowerUsageSummaries, getAllElectricPowerUsageSummariesById]
+- name: LocalTimeParameters
+  description: DST/timezone parameters for interpreting interval start times.
+  operations: [getLocalTimeParameters, getLocalTimeParametersById]
+- name: RetailCustomer
+  description: Customer record reachable through Customer -> CustomerAccount -> CustomerAgreement -> ServiceLocation -> Meter.
+  operations: [getCustomerInformationBySubscription, getCustomerInformationInBatch]
+- name: CustomerAccount
+  operations: [getCustomerAccountInSubscription, getCustomerAccountByAccountIdInSubscription]
+- name: CustomerAgreement
+  operations: [getCustomerAgreementByAccountIdInSubscription, getCustomerAgreementByCustomerAgreementId]
+- name: ServiceLocation
+  operations: [getAllServiceLocationByCustomerAgreementIdAndAccountIdInSubscription, getServiceLocationByServiceLocationId]
+- name: Meter
+  operations: [getAllMetersForServiceLocationInSubscription, getMeterBySerialNumberId]
+- name: Batch
+  description: Asynchronous assembly of bulk or subscription-scoped data; returns 202 then notifies the third party.
+  operations: [getAllUsageDataInBatch, getAllUsageDataForSubscriptionInBatch, getUsagePointBySubscriptionInBatch, getCustomerInformationInBatch]
+- name: RealTime
+  description: Non-standard extension — electric readings for the last 24 hours at 45-minute latency, provisional and not billing quality.
+  operations: [getAllRealTimeUsageDataInBatch, getAllRealTimeUsageDataForSubscriptionInBatch, getRealTimeUsagePointBySubscriptionInBatch, getAllRealTimeIntervalBlocksForUsagePointMeterReadingInSubscription, getRealTimeIntervalBlockForUsagePointMeterReadingInSubscription, getAllRealTimeReadingTypes, getRealTimeReadingTypeById]
+relationships:
+- from: Account
+  to: UsagePoint
+  type: has_many
+  cardinality: 1 to N
+  published: true
+  explanation: An account can have multiple service delivery points (Usage Points).
+  example: A customer has one account but owns a house and a store, each having separate electricity usage points.
+- from: Account
+  to: ReadingType
+  type: has_many
+  cardinality: 1 to N
+  published: true
+  explanation: An account can have multiple reading types defining how usage is measured.
+  example: An electricity account has Total Consumption (kWh) and Net Consumption (solar export/import) reading types.
+- from: UsagePoint
+  to: Meter
+  type: has_one
+  cardinality: 1 to 1
+  published: true
+  explanation: Each Usage Point is linked to exactly one meter measuring the service location.
+  example: Each apartment in a building has its own electricity meter, even under one agreement.
+- from: UsagePoint
+  to: MeterReading
+  type: has_many
+  cardinality: 1 to N
+  published: true
+  explanation: Each Usage Point can have multiple meter readings over time.
+  example: A gas usage point produces monthly meter readings every billing cycle.
+- from: MeterReading
+  to: IntervalBlock
+  type: has_one
+  cardinality: 1 to 1
+  published: true
+  explanation: Each meter reading is associated with one interval block containing time-based usage data.
+  example: A monthly electricity reading contains one interval block with 24 hourly readings per day.
+- from: Account
+  to: CustomerAgreement
+  type: has_many
+  cardinality: 1 to N (single service, 1 to 1)
+  published: true
+  explanation: Accounts may have multiple agreements representing active services.
+  example: 'One account has two agreements: electricity + gas.'
+- from: CustomerAgreement
+  to: UsagePoint
+  type: has_many
+  cardinality: 1 to N
+  published: true
+  explanation: Agreements can cover multiple service locations.
+  example: A commercial electricity agreement covers multiple warehouse locations under one contract.
+- from: Authorization
+  to: Subscription
+  type: has_many
+  via: subscriptions
+  published: false
+  derived_from: definitions.AuthorizationModel.subscriptions and SubscriptionModel.AuthorizationId
+- from: Subscription
+  to: UsagePoint
+  type: has_many
+  via: /resource/Subscription/{subscriptionId}/UsagePoint
+  published: false
+  derived_from: path hierarchy
+- from: MeterReading
+  to: ReadingType
+  type: belongs_to
+  via: ReadingType link
+  published: false
+  derived_from: ESPI resource model; powerOfTenMultiplier and uom are declared at ReadingType level
+- from: CustomerAccount
+  to: CustomerAgreement
+  type: has_many
+  via: /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement
+  published: false
+  derived_from: path hierarchy
+- from: CustomerAgreement
+  to: ServiceLocation
+  type: has_many
+  via: /resource/.../CustomerAgreement/{customerAgreementId}/ServiceLocation
+  published: false
+  derived_from: path hierarchy
+- from: ServiceLocation
+  to: Meter
+  type: has_many
+  via: /resource/.../ServiceLocation/{serviceLocationId}/Meter
+  published: false
+  derived_from: path hierarchy
+- from: ApplicationInformation
+  to: Authorization
+  type: has_many
+  via: ApplicationInformationId
+  published: false
+  derived_from: definitions.AuthorizationModel.ApplicationInformationId
+envelope_schemas:
+  Feed: [Title, Id, Updated, Link, Entry, Espi, Xmlns]
+  Entry: [Id, Title, Updated, Link, Content, Espi, Xsi]
+  Content: [ApplicationInformation, Authorization, Type]
+value_semantics:
+  scaling: Actual Consumption = IntervalReading.value x (10 ^ powerOfTenMultiplier)
+  electric_multiplier: 3
+  gas_multiplier: 0
+  uom_72: Real energy, Watt hours (Wh)
+  uom_119: Volume, cubic feet (ft3) — gas billed in CCF
+  quality_17: good and validated data
+  solar: NET consumption is returned for solar accounts

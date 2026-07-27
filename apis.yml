@@ -112,10 +112,46 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/con-edison-green-button-connect-my-data-swagger.json
+  - type: Overlay
+    url: overlays/con-edison-green-button-connect-my-data-overlay.yaml
+    name: API Evangelist enhancements — real host, documented OAuth 2.0 schemes, async batch semantics
   - type: PostmanCollection
     url: collections/con-edison-green-button-connect-my-data.postman_collection.json
   - type: PostmanEnvironment
     url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+    name: OAuth 2.0 authorization_code, refresh_token and client_credentials profile
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+    name: ESPI functional-block scopes (FB=1,3,4,5,7,8,10,15,16,35,51,53,56,57,58,60,67)
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+    name: 50 token-endpoint calls per minute; no limit on resource endpoints
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+    name: NAESB REQ.21 ESPI 1.1, Green Button CMD V3.3, RFC 6749/6750
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+    name: Batch completion notification POSTed to the third party's ThirdPartyNotifyUri
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+    name: Supervised test environment — apit.coned.com and uat10.coned.com
+  - type: MCPServer
+    url: mcp/con-edison-mcp.yml
+    name: Candidate MCP tool list derived from the published Swagger definition (no server exists)
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
@@ -168,6 +204,9 @@ apis:
     url: https://www.coned.com/en/business-partners/hosting-capacity
   - type: Documentation
     url: https://www.coned.com/en/business-partners/hosting-capacity/about
+  - type: AgentSkill
+    url: skills/con-edison-hosting-capacity-grid-data.md
+    name: Query Con Edison hosting capacity and grid data anonymously
   - type: FAQ
     url: https://www.coned.com/en/business-partners/hosting-capacity/faq-page
   - type: Application
@@ -183,6 +222,24 @@ apis:
   - type: APIReference
     url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/IEDR_CECONY/FeatureServer
 common:
+- type: AgenticAccess
+  url: agentic-access/con-edison-agentic-access.yml
+- type: DomainSecurity
+  url: security/con-edison-domain-security.yml
+- type: AgentSkill
+  url: skills/_index.yml
+  name: Packaged agent skills for Green Button Connect My Data and the open grid data
+- type: Packages
+  url: packages/con-edison-packages.yml
+  name: No first-party SDKs; one community Python package recorded
+- type: LLMsTxt
+  url: llms/con-edison-llms.txt
+- type: DeveloperPortal
+  url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  name: Become a Third Party — the Share My Data developer-facing portal (not self-serve)
+- type: Support
+  url: mailto:dlsharemydatatech@coned.com
+  name: Share My Data technical onboarding and production-issue support
 - type: Website
   url: https://www.coned.com/
 - type: About

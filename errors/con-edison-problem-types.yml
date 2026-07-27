@@ -1,0 +1,60 @@
+generated: '2026-07-27'
+method: derived
+source: openapi/con-edison-green-button-connect-my-data-swagger.json
+enriched_from:
+- https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+- https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+- live anonymous probe of https://api.coned.com/gbc/espi/1_1 on 2026-07-27
+format: vendor-json
+rfc9457: false
+envelope:
+  shape: '{"Message": "<text>"}'
+  content_type: application/json
+  note: >-
+    The published Swagger 2.0 definition declares response codes with one-word descriptions and no
+    error schema. The only error body observed live is the JSON Message envelope returned by the token
+    endpoint. OAuth authorization errors are not returned in a body at all — they are appended to the
+    third-party redirect URI as query parameters.
+problems:
+- status: 400
+  title: BadRequest
+  description: >-
+    Declared on 37 of 37 operations in the Swagger definition. No error schema, code registry or
+    remediation text is published for it.
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json (all operations)
+  documented_causes:
+  - Missing or malformed URL parameters on the authorization redirect ("If any of the URL parameters are missing or wrong, customers will be redirected to an error page.")
+  - Batch resource URI called more than 2 days after notification (the assembled response has been deleted)
+  - Duplicate batch request submitted while an identical request is still pending
+- status: 401
+  title: Unauthorized
+  description: Access token missing, invalid or expired.
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json (36 /resource/* operations)
+  observed_body: '{"Message":"Unauthorized. Access token is missing or invalid."}'
+  observed_at: 'POST https://api.coned.com/gbc/espi/1_1/oauth/Token, anonymous, 2026-07-27'
+  documented_causes:
+  - Access token older than 3600 seconds (Con Edison recommends storing a token timestamp to pre-empt this)
+  - Customer revoked the authorization ("Stop Sharing My Data"), the fixed sharing period ended, or the one-time 24-hour window elapsed
+  - Authorization auto-revoked after 365 days of third-party inactivity
+  - The account-to-online-profile relationship backing the authorization is no longer valid
+  remediation: Mint a new access token with the refresh token; if the refresh token has expired (1 year unused), the customer must re-authorize.
+- status: 200
+  title: OK
+  description: Success. Recorded here only because the contract declares no 2xx response schema.
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json (all operations)
+- status: 202
+  title: Accepted
+  description: >-
+    Documented in the onboarding document (not in the Swagger definition) for the asynchronous Batch
+    resources: "The HTTP response code 202 signifies to the Third Party a Data Custodian has accepted
+    the request and will require some time to assemble the response."
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllUsageDataInBatch
+oauth_errors:
+- error: access_denied
+  delivery: redirect query parameters on the third-party redirect URI
+  verbatim: '{{Third-Party-Redirect_URI}}?error=access_denied&error_description=Customer denied authorization.&state=123'
+  cause: The customer declined the authorization request on the Con Edison / Orange & Rockland consent screen.
+gaps:
+- No error code registry, problem-type URIs or per-code remediation reference is published.
+- No 403, 404, 409, 429 or 5xx responses are declared anywhere in the contract, including on the rate-limited token endpoint.
+- Production issues are reported by email to dlsharemydatatech@coned.com rather than through a status or incident surface.

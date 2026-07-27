@@ -1,0 +1,54 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+provider: Con Edison
+providerId: con-edison
+generated: '2026-07-27'
+method: searched
+created: '2026-07-27'
+modified: '2026-07-27'
+tags:
+- Rate Limiting
+- Green Button
+- Energy Data
+description: >-
+  Con Edison publishes exactly one rate limit for the Green Button Connect My Data API: the OAuth
+  token endpoint permits 50 requests per minute, excluding the authorization_code flow. The onboarding
+  document states plainly that "For all other endpoints, no rate limit is in place currently." The
+  practical governor on the resource endpoints is the one-hour access token plus the mandatory token
+  caching rule.
+sources:
+- https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+- https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+headers:
+  requestId: null
+  limit: null
+  remaining: null
+  reset: null
+responseCodes:
+  throttled: null
+limits:
+- name: OAuth token endpoint
+  scope: client
+  metric: requests_per_minute
+  limit: 50
+  timeFrame: minute
+  applies_to: POST /gbc/espi/1_1/oauth/Token
+  excludes: authorization_code grant
+  verbatim: >-
+    "Rate limiting is in place for the token endpoint (excluding authorization_code flow), and it will
+    only allow 50 token API calls within one minute."
+- name: All other endpoints
+  scope: client
+  metric: none
+  limit: null
+  timeFrame: null
+  verbatim: '"For all other endpoints, no rate limit is in place currently."'
+related_constraints:
+- constraint: Access tokens expire after 3600 seconds and MUST be cached and reused within that window
+- constraint: Batch requests are de-duplicated — duplicates are rejected while one is pending, and identical repeats within 2 days return the cached response
+- constraint: Batch notifications typically arrive within one hour, up to 24 hours under heavy load
+- constraint: Historical data requests are capped at 2 years (HistoryLength=63072000)
+- constraint: Authorizations are auto-revoked after 365 days without a third-party call
+open_surface_note: >-
+  The Hosting Capacity ArcGIS feature services publish no rate limit; Esri ArcGIS Online service
+  quotas apply upstream and are not documented by Con Edison.

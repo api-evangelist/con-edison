@@ -1,0 +1,48 @@
+generated: '2026-07-27'
+method: searched
+source: registry searches of npm, PyPI and GitHub on 2026-07-27
+official_sdks: 0
+summary: >-
+  Con Edison ships NO first-party client libraries in any language, and there is no Con Edison GitHub
+  organization to host them (api.github.com/orgs/coned returns 404; github.com/coned is an unrelated
+  personal user account). This is consistent with its own position — "con Edison is unable to support
+  API development for third parties. They must have their own technical team for the full setup." The
+  only tooling Con Edison publishes is the Swagger 2.0 definition and the Postman collection and
+  environment, all captured in this repo. What exists on the registries is community work, recorded
+  here as such.
+packages:
+- language: python
+  registry: pypi
+  name: coned
+  version_seen: 0.4.0
+  url: https://pypi.org/project/coned/
+  install: pip install coned
+  repository: https://github.com/bvlaicu/coned/
+  author: Bogdan Vlaicu (community)
+  license: Apache-2.0
+  official: false
+  description: >-
+    Community Python client that reads the latest smart-meter read (start time, end time, usage value,
+    unit of measurement) for a Con Edison or Orange & Rockland account. It is NOT a Green Button
+    Connect My Data client — it authenticates as the CUSTOMER with coned.com/oru.com credentials plus
+    MFA (security question or TOTP) and an account UUID and meter number, the pattern used by the
+    Home Assistant integration. It does not touch the ESPI API, uses no OAuth 2.0 third-party
+    credentials, and is not endorsed by Con Edison.
+  caution: Credential-based screen access, not the sanctioned third-party data path. Con Edison's supported machine-to-machine surface is Green Button Connect My Data under a signed Data Security Agreement.
+registries_searched:
+- registry: npm
+  query: [coned, con edison green button, green button espi]
+  result: no first-party or relevant community package
+- registry: pypi
+  query: [coned, green-button]
+  result: coned 0.4.0 (community, above); green-button not published
+- registry: github
+  query: orgs/coned
+  result: HTTP 404 — no Con Edison GitHub organization
+provider_published_tooling:
+- name: DCX GBC API V2 Swagger 2.0 definition
+  file: openapi/con-edison-green-button-connect-my-data-swagger.json
+- name: GBC Certification Third party V3.3 Postman collection
+  file: collections/con-edison-green-button-connect-my-data.postman_collection.json
+- name: GBC Certification_ThirdParty_Env v3.3 Postman environment
+  file: collections/con-edison-green-button-connect-my-data.postman_environment.json

@@ -1,0 +1,118 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+docs: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+note: >-
+  Con Edison's Swagger 2.0 definition declares no securityDefinitions, so derive-oauth-scopes.py
+  produced nothing. The scope model below is transcribed from section 3.2.3 "Functional Blocks and its
+  description" of the Third-Party Technical Onboarding Document v4.4 (last updated 2026-05-07).
+  Scopes are NAESB REQ.21 ESPI functional blocks (FB), not free-form strings: a single scope value is
+  a semicolon-delimited string carrying the FB list plus interval/history qualifiers.
+model:
+  style: espi-functional-blocks
+  format: FB=<block>_<block>...;IntervalDuration=<...>;BlockDuration=<...>;HistoryLength=<seconds>;BR=<ApplicationInformationId>
+  qualifiers:
+  - name: IntervalDuration
+    example: Monthly_3600_900_300
+    description: Interval lengths in seconds the third party may request (3600 hourly, 900 fifteen-minute, 300 five-minute) plus Monthly
+  - name: BlockDuration
+    example: Monthly_Daily
+    description: Aggregation block sizes returned
+  - name: HistoryLength
+    example: '63072000'
+    description: Maximum history in seconds — 63,072,000 seconds is the documented two-year cap
+  - name: BR
+    example: '000092'
+    description: Bulk Resource id — same value as the ApplicationInformation ID, obtained from the Get All Third-Party Applications endpoint
+  customer_control: >-
+    The customer sees the requested scopes on the Con Edison / Orange & Rockland authorization screen
+    and may remove scopes (removal only, no addition) before accepting.
+scopes:
+- scope: FB=1
+  name: Usage Data common
+  block: 1
+  mandatory_for: [consumption, billing]
+- scope: FB=3
+  name: Usage Data Connect My Data
+  block: 3
+  mandatory_for: [consumption, billing]
+- scope: FB=4
+  name: Interval Reading
+  block: 4
+  mandatory_for: [consumption]
+- scope: FB=5
+  name: Electricity Interval Metering
+  block: 5
+- scope: FB=7
+  name: Net Electricity Metering
+  block: 7
+- scope: FB=8
+  name: Forward and Reverse Electricity Metering
+  block: 8
+- scope: FB=10
+  name: Natural Gas Interval Metering
+  block: 10
+- scope: FB=15
+  name: Usage Summary
+  block: 15
+- scope: FB=16
+  name: Usage Summary with cost
+  block: 16
+- scope: FB=35
+  name: Usage Data Bulk
+  block: 35
+- scope: FB=51
+  name: Retail Customer Common
+  block: 51
+  mandatory_for: [retail-customer]
+- scope: FB=53
+  name: Retail Customer Connect My Data
+  block: 53
+  mandatory_for: [retail-customer]
+- scope: FB=56
+  name: Retail Customer Billing Information
+  block: 56
+- scope: FB=57
+  name: Retail Customer Account-Agreement Information
+  block: 57
+- scope: FB=58
+  name: Retail Customer Service-location Information
+  block: 58
+- scope: FB=60
+  name: Retail Customer Meter Information
+  block: 60
+- scope: FB=67
+  name: Retail Customer Bulk
+  block: 67
+mandatory_minimums:
+- use_case: Consumption
+  blocks: [1, 3, 4]
+- use_case: Billing
+  blocks: [1, 3]
+- use_case: Retail Customer
+  blocks: [51, 53]
+published_scope_examples:
+- name: Consumption Electricity Scope
+  value: FB=1_3_4_5;IntervalDuration=Monthly_3600_900_300;BlockDuration=Monthly_Daily;HistoryLength=63072000;BR=000092
+- name: Consumption Electricity Net Scope
+  value: FB=1_3_4_7;IntervalDuration=Monthly_3600_900_300;BlockDuration=Monthly_Daily;HistoryLength=63072000;BR=000092
+- name: Consumption Gas Scope
+  value: FB=1_3_4_10;IntervalDuration=Monthly_3600_900_300;BlockDuration=Monthly_Daily;HistoryLength=63072000;BR=000092
+- name: Consumption Forward Reverse Scope
+  value: FB=1_3_4_8;IntervalDuration=Monthly_3600_900_300;BlockDuration=Monthly_Daily;HistoryLength=63072000;BR=000092
+- name: Billing Information Without Cost Scope
+  value: FB=1_3_15;IntervalDuration=Monthly;BlockDuration=Monthly;HistoryLength=63072000;BR=000092
+- name: Billing Information With Cost Scope
+  value: FB=1_3_15_16;IntervalDuration=Monthly;BlockDuration=Monthly;HistoryLength=63072000;BR=000092
+- name: RetailCustomer Billing Account Scope
+  value: FB=51_53_56;BR=000092
+- name: RetailCustomer Meter Scope
+  value: FB=51_53_56_57_58_60;BR=000092
+- name: Multiple Scopes combined
+  value: FB=1_3_4_5_7_8_10_15_16_51_53_56_57_58_60;IntervalDuration=Monthly_3600_900_300;BlockDuration=Monthly_Daily;HistoryLength=63072000;BR=000092
+- name: Third-Party Client Access Token (client_credentials)
+  value: FB=34_35
+  note: The bulk/client-credentials scope published in section 3.3.2; FB_34 is not described in the document's functional-block table.
+- name: Refresh-token example
+  value: FB=1_3_4_5_7_10_15_16_51_53_56_57_58_60
+flows: [authorizationCode, refreshToken, clientCredentials]

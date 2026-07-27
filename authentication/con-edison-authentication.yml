@@ -1,0 +1,121 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+docs: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+note: >-
+  The published Swagger 2.0 definition (openapi/con-edison-green-button-connect-my-data-swagger.json)
+  declares NO securityDefinitions, so nothing was derivable from the contract. Everything below is
+  taken verbatim from Con Edison's own "Con Edison/Orange & Rockland Green Button Connect Third-Party
+  Technical Onboarding Document" (Document Version 4.4, Last Update Date 5/7/2026) and the "Share My
+  Data FAQ for Third Party Vendors", both publicly downloadable. Credentials themselves are NOT
+  self-serve: client_id, client_secret and the Registration Access Token are emailed by the Con Edison
+  onboarding team after a signed Data Security Agreement and supervised certification testing.
+summary:
+  types: [oauth2, http]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, clientCredentials, refreshToken]
+  http_schemes: [basic, bearer]
+  transport: HTTPS only, TLS 1.2 or higher required on all third-party URLs
+  standards: [RFC 6749, RFC 6750, NAESB REQ.21 ESPI]
+schemes:
+- name: oauth2-authorization-code
+  type: oauth2
+  flow: authorizationCode
+  description: >-
+    Per-customer consent flow. The customer is redirected to the data custodian's authorization screen
+    (Con Edison or Orange & Rockland), selects account, authorization duration and scope, and is
+    redirected back to the third-party redirect URI with an authorization code plus the state value.
+    The third party exchanges the code at the token endpoint for an access token and refresh token.
+  authorization_endpoints:
+  - environment: production
+    custodian: Con Edison
+    url: https://www.coned.com/en/
+    note: base_url used to build the redirect to the authorization screen
+  - environment: production
+    custodian: Orange & Rockland
+    url: https://www.oru.com/en/
+  - environment: test
+    custodian: Con Edison
+    url: https://uat10.coned.com/en/
+  - environment: test
+    custodian: Orange & Rockland
+    url: https://uat10.oru.com/en/
+  token_endpoints:
+  - environment: production
+    url: https://api.coned.com/gbc/espi/1_1/oauth/Token
+  - environment: test
+    url: https://apit.coned.com/gbc/espi/1_1/oauth/token
+  client_authentication: 'HTTP Basic — Authorization: Basic base64(client_id:client_secret)'
+  request_content_type: application/x-www-form-urlencoded
+  grant_parameters: grant_type=authorization_code&code=<authorization code>&redirect_uri=<redirect uri>
+  authorization_code_lifetime_seconds: 60
+  authorization_code_single_use: true
+  token_response_fields: [access_token, refresh_token, token_type, expires_in, scope, resourceURI, authorizationURI, customerResourceURI]
+  declined_authorization_response: >-
+    {{Third-Party-Redirect_URI}}?error=access_denied&error_description=Customer denied
+    authorization.&state=123
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#Token
+- name: oauth2-refresh-token
+  type: oauth2
+  flow: refreshToken
+  description: >-
+    Used to mint a new access token for an existing customer authorization once the one-hour access
+    token expires. Con Edison does NOT store the refresh token — if the third party loses it the
+    customer must revoke and re-authorize.
+  grant_parameters: grant_type=refresh_token&refresh_token={refresh_token}&scope=FB=1_3_4_5_7_10_15_16_51_53_56_57_58_60
+  refresh_token_expiry: 1 year of non-use
+- name: oauth2-client-credentials
+  type: oauth2
+  flow: clientCredentials
+  description: >-
+    Third-Party Client Access Token (CAT). Minted from client_id/client_secret and used to retrieve
+    data across ALL customers actively authorized with the third party (usage, billing, account and
+    authorization resources, bounded by each customer's granted scope). Used for the bulk/batch
+    resources.
+  grant_parameters: grant_type=client_credentials&scope=FB=34_35
+  token_endpoints:
+  - environment: production
+    url: https://api.coned.com/gbc/espi/1_1/oauth/Token
+  - environment: test
+    url: https://apit.coned.com/gbc/espi/1_1/oauth/token
+- name: bearer-token
+  type: http
+  scheme: bearer
+  bearer_format: OAuth 2.0 Bearer Token (RFC 6750)
+  description: >-
+    All /resource/* calls carry the access token as an HTTP Bearer token. An anonymous call to
+    https://api.coned.com/gbc/espi/1_1/resource/ReadServiceStatus returns HTTP 401; the token endpoint
+    returns {"Message":"Unauthorized. Access token is missing or invalid."}.
+  applies_to: all 36 /resource/* operations in the published Swagger definition
+- name: registration-access-token
+  type: http
+  scheme: bearer
+  description: >-
+    A separate Registration Access Token, emailed to the third party after onboarding, is used to
+    retrieve the ApplicationInformation resource (client_id, client_secret, endpoints, notify URIs).
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getThirdPartyApplicationById
+token_lifetimes:
+  access_token_seconds: 3600
+  access_token_caching: required — "Third-party should cache the access token and reuse the access token for subsequent API calls until the access token expires"
+  refresh_token: expires after 1 year if unused
+  authorization_code_seconds: 60
+  authorization_inactivity_revocation_days: 365
+credential_issuance:
+  self_serve: false
+  process:
+  - Complete the online Third-Party Company Registration Form (separately for Orange & Rockland)
+  - Complete and sign the Data Security Agreement and accept terms and conditions
+  - Submit the technical onboarding registration form (all supplied URLs must be reachable from the Con Edison network and support TLS 1.2+)
+  - Receive client_id, client_secret and Registration Access Token by email from the onboarding team
+  - Complete supervised testing in the test environment and submit the API testing checklist
+  - Re-register with production details
+  timeline: 30 to 60 days for technical onboarding; 90 days to complete registration testing
+  contacts: [ShareMyData@coned.com, ShareMyDataTech@coned.com, dlsharemydatatech@coned.com]
+not_supported:
+  openid_connect: https://www.coned.com/.well-known/openid-configuration and https://api.coned.com/.well-known/openid-configuration both return HTTP 404 (probed 2026-07-27)
+  mutual_tls: not documented
+  api_keys: not used
+  accreditation_scheme: none — bilateral utility agreement, not CDR-style accreditation
+open_surfaces:
+- api: Con Edison Hosting Capacity Map REST API
+  authentication: none — ArcGIS feature services at https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services answer anonymously (HTTP 200)

@@ -1,0 +1,113 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Con Edison Green Button Connect My Data (DCX GBC API V2)
+  version: 1.0.0
+x-generated: '2026-07-27'
+x-method: generated
+x-source: openapi/con-edison-green-button-connect-my-data-swagger.json
+x-note: >-
+  Con Edison's published Swagger 2.0 definition ships with a placeholder host ("provided-by-coned"),
+  no securityDefinitions at all, no operation summaries or descriptions, and no response schemas. This
+  overlay records the facts Con Edison documents in prose — in its Third-Party Technical Onboarding
+  Document v4.4 and Share My Data FAQ — without mutating the harvested contract. Nothing here is
+  invented: every value is traceable to that documentation or to a live probe on 2026-07-27.
+extends: openapi/con-edison-green-button-connect-my-data-swagger.json
+actions:
+- target: $.info
+  description: Record provenance and the standards the contract implements.
+  update:
+    x-apievangelist-provider: con-edison
+    x-apievangelist-generated: '2026-07-27'
+    x-standards:
+    - NAESB REQ.21 Energy Services Provider Interface (ESPI) 1.1
+    - Green Button Connect My Data V3.3
+    - RFC 6749 OAuth 2.0
+    - RFC 6750 OAuth 2.0 Bearer Token Usage
+    x-documentation: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    x-access: Not self-serve. Registration, a signed Data Security Agreement, a technical onboarding form and supervised certification testing precede production credentials.
+- target: $
+  description: Replace the placeholder host with the real production host documented by Con Edison and probed live.
+  update:
+    host: api.coned.com
+    x-environments:
+    - name: production
+      host: api.coned.com
+      base_url: https://api.coned.com/gbc/espi/1_1
+    - name: test
+      host: apit.coned.com
+      base_url: https://apit.coned.com/gbc/espi/1_1
+- target: $
+  description: Add the OAuth 2.0 security schemes Con Edison documents in prose but omits from the contract.
+  update:
+    securityDefinitions:
+      espi_oauth2_authorization_code:
+        type: oauth2
+        flow: accessCode
+        authorizationUrl: https://www.coned.com/en/oauth/authorize
+        tokenUrl: https://api.coned.com/gbc/espi/1_1/oauth/Token
+        description: >-
+          Per-customer consent. Authorization code expires in 60 seconds and is single use. Access
+          tokens live 3600 seconds and must be cached. Client authentication at the token endpoint is
+          HTTP Basic base64(client_id:client_secret).
+        scopes:
+          FB=1: Usage Data common
+          FB=3: Usage Data Connect My Data
+          FB=4: Interval Reading
+          FB=5: Electricity Interval Metering
+          FB=7: Net Electricity Metering
+          FB=8: Forward and Reverse Electricity Metering
+          FB=10: Natural Gas Interval Metering
+          FB=15: Usage Summary
+          FB=16: Usage Summary with cost
+          FB=35: Usage Data Bulk
+          FB=51: Retail Customer Common
+          FB=53: Retail Customer Connect My Data
+          FB=56: Retail Customer Billing Information
+          FB=57: Retail Customer Account-Agreement Information
+          FB=58: Retail Customer Service-location Information
+          FB=60: Retail Customer Meter Information
+          FB=67: Retail Customer Bulk
+      espi_oauth2_client_credentials:
+        type: oauth2
+        flow: application
+        tokenUrl: https://api.coned.com/gbc/espi/1_1/oauth/Token
+        description: Third-Party Client Access Token (CAT) used for bulk access across all actively authorized customers.
+        scopes:
+          FB=34_35: Bulk usage data access for the third party's authorized customer set
+- target: $.paths./resource/ReadServiceStatus.get
+  description: Document the service-status operation and its live probed behaviour.
+  update:
+    summary: Read Green Button Connect service status
+    security:
+    - espi_oauth2_authorization_code: []
+    x-probe:
+      url: https://api.coned.com/gbc/espi/1_1/resource/ReadServiceStatus
+      status: 401
+      date: '2026-07-27'
+      body_note: Anonymous call returns 401 with an empty body; the token endpoint returns {"Message":"Unauthorized. Access token is missing or invalid."}
+- target: $.paths./oauth/Token.post
+  description: Record the documented grants, client authentication and rate limit on the token endpoint.
+  update:
+    summary: Exchange an authorization code, refresh token or client credentials for an access token
+    x-grant-types: [authorization_code, refresh_token, client_credentials]
+    x-client-authentication: HTTP Basic base64(client_id:client_secret)
+    x-content-type: application/x-www-form-urlencoded
+    x-rate-limit: 50 requests per minute, excluding the authorization_code flow
+    x-token-lifetime-seconds: 3600
+- target: $.paths./resource/Batch/Bulk/{bulkId}.get
+  description: Record the asynchronous request-then-notify semantics the contract omits.
+  update:
+    summary: Submit an asynchronous bulk batch request for all authorized customers
+    x-async:
+      accepted_status: 202
+      notification: HTTP POST to the third party's registered ThirdPartyNotifyUri carrying an XML BatchList of resource URLs
+      chunking: responses over 200 MB are split into multiple files
+      retention_days: 2
+      typical_latency: within one hour; up to 24 hours under heavy load
+      duplicate_handling: duplicates rejected while pending; identical repeats within 2 days return the cached response
+- target: $.definitions.ApplicationInformationModel
+  description: Flag the callback fields that carry Con Edison's only event surface.
+  update:
+    x-callbacks:
+      ThirdPartyNotifyUri: Batch completion notifications are POSTed here; must be reachable from the Con Edison network over TLS 1.2+
+      AuthorizationChangeNotifyUri: ESPI authorization-change notification endpoint; payload not documented by Con Edison

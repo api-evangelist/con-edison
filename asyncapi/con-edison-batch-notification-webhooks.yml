@@ -1,0 +1,65 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+also_from: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+spec_type: none
+asyncapi_published: false
+api: Con Edison Green Button Connect My Data API
+summary: >-
+  Con Edison publishes no AsyncAPI document and no streaming surface, but the Green Button Connect
+  batch flow is a genuine server-to-client callback: the third party registers notification URIs at
+  onboarding, the Data Custodian answers a batch request with HTTP 202, assembles the data
+  asynchronously, then POSTs a notification to the third party's endpoint carrying an XML BatchList of
+  resource URLs. This webhook catalog is captured from Con Edison's own documentation; no event schema
+  is published, so none is invented here.
+callback_endpoints:
+- name: ThirdPartyNotifyUri
+  registered_in: ApplicationInformation resource (definitions.ApplicationInformationModel.ThirdPartyNotifyUri)
+  registered_via: the technical onboarding registration form, updated by emailing ShareMyDataTech@coned.com
+  direction: Con Edison -> third party
+  requirements:
+  - Must be reachable from the Con Edison network
+  - Must support TLS 1.2 or higher
+  - Must not be renamed or altered without notifying the onboarding team ("any changes will disrupt existing integrations")
+- name: AuthorizationChangeNotifyUri
+  registered_in: ApplicationInformation resource (definitions.ApplicationInformationModel.AuthorizationChangeNotifyUri)
+  direction: Con Edison -> third party
+  note: >-
+    Declared in the published Swagger definition's ApplicationInformation model as the ESPI
+    authorization-change notification endpoint. Con Edison's onboarding document does not describe its
+    payload, so nothing is asserted about it beyond its presence in the contract.
+events:
+- name: batch.notification
+  trigger: Completion of an asynchronous Batch or RealTime Batch request
+  delivery: HTTP POST to ThirdPartyNotifyUri
+  payload_format: XML containing a BatchList of resource URLs
+  payload_note: >-
+    "Batch notification will contain a list of resource URLs that satisfies the batch request
+    submitted by the third-party." URLs are XML-escaped (&amp;) and must be unescaped before the
+    GET. BatchList may include URLs for Bulk Resources and/or individual ones.
+  consumer_action: >-
+    GET each resource URL with the Authorization header associated with that batch request, within 2
+    days of the notification.
+  timing: typically within one hour of the request; up to 24 hours under heavy load
+  retention: 2 days — after that the assembled response is deleted and the request must be resubmitted
+  chunking: responses over the 200 MB limit are split into multiple files
+  de_duplication: >-
+    Duplicate batch requests are rejected while one is pending; repeats with identical parameters
+    within the 2-day window return the cached response prepared for the original request.
+  triggering_operations:
+  - getAllUsageDataInBatch
+  - getAllUsageDataForSubscriptionInBatch
+  - getUsagePointBySubscriptionInBatch
+  - getCustomerInformationInBatch
+  - getAllRealTimeUsageDataInBatch
+  - getAllRealTimeUsageDataForSubscriptionInBatch
+  - getRealTimeUsagePointBySubscriptionInBatch
+  accepted_status: 202
+security:
+  authentication_to_third_party: not documented — Con Edison publishes no signature, shared secret or mTLS scheme for the notification POST
+  transport: HTTPS with TLS 1.2+ required on the third-party endpoint
+gaps:
+- No AsyncAPI or event schema document is published.
+- The notification payload is described in prose and by ESPI convention; no sample notification body is published.
+- No retry policy, delivery guarantee or replay endpoint is documented for the notification POST.
+- No verification mechanism (signature header) is documented for inbound notifications.

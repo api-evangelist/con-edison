@@ -1,0 +1,70 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+api: Con Edison Green Button Connect My Data API
+self_serve: false
+summary: >-
+  Con Edison runs a full, separately-addressed test environment for Green Button Connect My Data, and
+  it is a mandatory stage of onboarding rather than an optional playground. Both the test API host and
+  the test authorization host are live and OAuth-guarded (HTTP 401 anonymously, probed 2026-07-27).
+  Access is supervised: the FAQ and onboarding document state that third parties cannot drive the GBC
+  test environment on their own — the Con Edison onboarding team issues test credentials and reviews a
+  completed API testing checklist before production registration is allowed. There are no public test
+  credentials, no magic test identifiers and no self-issued sandbox keys.
+environments:
+- name: test
+  api_base_url: https://apit.coned.com/gbc/espi/1_1
+  token_endpoint: https://apit.coned.com/gbc/espi/1_1/oauth/token
+  authorization_base:
+    con_edison: https://uat10.coned.com/en/
+    orange_rockland: https://uat10.oru.com/en/
+  probed: 'GET https://apit.coned.com/gbc/espi/1_1/resource/ReadServiceStatus -> HTTP 401 (2026-07-27)'
+- name: production
+  api_base_url: https://api.coned.com/gbc/espi/1_1
+  token_endpoint: https://api.coned.com/gbc/espi/1_1/oauth/Token
+  authorization_base:
+    con_edison: https://www.coned.com/en/
+    orange_rockland: https://www.oru.com/en/
+  probed: 'GET https://api.coned.com/gbc/espi/1_1/resource/ReadServiceStatus -> HTTP 401 (2026-07-27)'
+  note: '"We will not be doing any customer authorization testing in production."'
+test_tooling:
+- name: GBC Certification Third party V3.3 (Postman collection)
+  file: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  source: https://edge-e-dcx-downloads-prod-gjf6ega8bmh8crfh.a01.azurefd.net/gbc-api-defintions/postman-collection.json
+  requests: 39
+  note: Published by Con Edison and downloadable anonymously; named for the Green Button CMD certification suite version.
+- name: GBC Certification_ThirdParty_Env v3.3 (Postman environment)
+  file: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  source: https://edge-e-dcx-downloads-prod-gjf6ega8bmh8crfh.a01.azurefd.net/gbc-api-defintions/postman-environment.json
+  base_url: https://apit.coned.com/gbc/espi/1_1
+  note: All secret values ship EMPTY — client_id, client_secret and tokens are supplied by the onboarding team.
+- name: DCX GBC API V2 Swagger 2.0 definition
+  file: openapi/con-edison-green-button-connect-my-data-swagger.json
+  source: https://edge-e-dcx-downloads-prod-gjf6ega8bmh8crfh.a01.azurefd.net/gbc-api-defintions/swagger-cert.json
+  note: >-
+    Con Edison's onboarding document points third parties at editor.swagger.io to render it. The
+    document host placeholder is "provided-by-coned" — substitute apit.coned.com or api.coned.com.
+- name: Endpoint checklist (API testing checklist)
+  availability: emailed in the technical onboarding welcome package; not published publicly
+credentials:
+  issued_by: Con Edison GBC technical onboarding team, by email
+  items: [client_id, client_secret, Registration Access Token]
+  published_test_values: none
+  note: No test cards, magic identifiers, seeded customers or public demo tokens are published.
+test_process:
+- Third-party registration in the test environment (technical registration form)
+- Customer authorization flow testing — both third-party-initiated and utility-initiated
+- GBC API testing against the Swagger definition and Postman collection
+- Submit the completed API testing status to the onboarding team for review
+- Re-register with production details
+constraints:
+  independent_access: false
+  verbatim: '"third-party vendors cannot access the GBC test environment" independently — the onboarding team drives it'
+  window_days: 90 to complete registration testing before the registration is put on hold
+  support: dlsharemydatatech@coned.com
+open_surface_alternative:
+  api: Con Edison Hosting Capacity Map REST API
+  note: >-
+    The grid-data side needs no sandbox at all — the ArcGIS feature services at
+    https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services answer anonymously with HTTP 200
+    and can be queried directly with ?f=json.

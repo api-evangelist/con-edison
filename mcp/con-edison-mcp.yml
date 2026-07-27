@@ -1,0 +1,222 @@
+generated: '2026-07-27'
+method: derived
+status: candidate
+source: openapi/con-edison-green-button-connect-my-data-swagger.json
+provider_signal: No Con Edison MCP server exists. There is no Con Edison GitHub organization (api.github.com/orgs/coned
+  returns 404), no MCP registry entry, and no agent or AI tooling reference anywhere on coned.com or in
+  the 35-page Third-Party Technical Onboarding Document v4.4. The tool list below is a CANDIDATE derived
+  one-to-one from the 37 operations of Con Edison's own published Swagger 2.0 definition ("DCX GBC API
+  V2"), not an official server. Every tool inherits its real input contract from the backing operation's
+  parameters in that spec.
+server:
+  name: con-edison-green-button
+  transport: http
+  url: null
+authentication:
+  model: OAuth 2.0 Bearer token per customer authorization (RFC 6750); Third-Party Client Access Token
+    for bulk resources
+  self_serve: false
+  note: Any real MCP server for this API would have to carry per-customer ESPI functional-block scopes
+    and the 3600-second token lifetime; credentials are issued only after a signed Data Security Agreement
+    and supervised certification testing.
+  detail: authentication/con-edison-authentication.yml
+tools:
+- name: get_third_party_application_by_id
+  description: Retrieve the third-party ApplicationInformation record (client credentials, OAuth endpoints,
+    notify URIs, granted scope)
+  category: ApplicationInformation
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getThirdPartyApplicationById
+  http: GET /resource/ApplicationInformation/{applicationInformationId}
+- name: get_all_third_party_authorizations
+  description: List every customer authorization currently held by the third party
+  category: Authorization
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#Get all Third Party Authorizations
+  http: GET /resource/Authorization
+- name: get_third_party_authorization_by_i_d
+  description: Retrieve one customer authorization by authorizationId
+  category: Authorization
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#Get Third Party Authorization
+    by ID
+  http: GET /resource/Authorization/{authorizationId}
+- name: read_service_status
+  description: Read the Green Button Connect service status
+  category: ServiceStatus
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#readServiceStatus
+  http: GET /resource/ReadServiceStatus
+- name: token
+  description: Exchange an authorization code, refresh token or client credentials for an access token
+  category: Authorization
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#Token
+  http: POST /oauth/Token
+- name: get_all_usage_data_in_batch
+  description: Submit an asynchronous bulk batch request for all authorized customers (returns 202, then
+    notifies)
+  category: Batch
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllUsageDataInBatch
+  http: GET /resource/Batch/Bulk/{bulkId}
+- name: get_all_usage_data_for_subscription_in_batch
+  description: Submit an asynchronous batch request for one subscription
+  category: Batch
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllUsageDataForSubscriptionInBatch
+  http: GET /resource/Batch/Subscription/{subscriptionId}
+- name: get_usage_point_by_subscription_in_batch
+  description: Submit an asynchronous batch request for one usage point in a subscription
+  category: Batch
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getUsagePointBySubscriptionInBatch
+  http: GET /resource/Batch/Subscription/{subscriptionId}/UsagePoint/{usagePointId}
+- name: get_customer_information_in_batch
+  description: Submit an asynchronous batch request for retail customer information
+  category: Batch
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getCustomerInformationInBatch
+  http: GET /resource/Batch/RetailCustomer/{subscriptionId}
+- name: get_all_interval_blocks_for_usage_point_meter_reading_in_subscription
+  description: List interval blocks for a meter reading on a usage point
+  category: IntervalBlock
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllIntervalBlocksForUsagePointMeterReadingInSubscription
+  http: GET /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/MeterReading/{meterReadingId}/IntervalBlock
+- name: get_interval_blocks_for_usage_point_meter_reading_in_subscription
+  description: Retrieve one interval block by id
+  category: IntervalBlock
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getIntervalBlocksForUsagePointMeterReadingInSubscription
+  http: GET /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/MeterReading/{meterReadingId}/IntervalBlock/{intervalBlockId}
+- name: get_local_time_parameters
+  description: List local time parameters (timezone and DST rules) for interpreting interval start times
+  category: LocalTimeParameters
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getLocalTimeParameters
+  http: GET /resource/LocalTimeParameters
+- name: get_local_time_parameters_by_id
+  description: Retrieve one local time parameters resource by id
+  category: LocalTimeParameters
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getLocalTimeParametersById
+  http: GET /resource/LocalTimeParameters/{localTimeParameterId}
+- name: get_all_meter_readings_for_usage_point_in_subscription
+  description: List meter readings for a usage point
+  category: MeterReading
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllMeterReadingsForUsagePointInSubscription
+  http: GET /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/MeterReading
+- name: get_meter_reading_for_usage_point_in_subscription
+  description: Retrieve one meter reading by id
+  category: MeterReading
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getMeterReadingForUsagePointInSubscription
+  http: GET /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/MeterReading/{meterReadingId}
+- name: get_all_reading_types
+  description: List reading types (uom, powerOfTenMultiplier, commodity, flow direction, interval length)
+  category: ReadingType
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllReadingTypes
+  http: GET /resource/ReadingType
+- name: get_reading_types_by_id
+  description: Retrieve one reading type by id
+  category: ReadingType
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getReadingTypesById
+  http: GET /resource/ReadingType/{readingTypeId}
+- name: get_all_real_time_usage_data_in_batch
+  description: Submit an asynchronous real-time bulk batch request (electric, last 24 hours)
+  category: RealTimeBatch
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllRealTimeUsageDataInBatch
+  http: GET /resource/RealTime/Batch/Bulk/{bulkId}
+- name: get_all_real_time_usage_data_for_subscription_in_batch
+  description: Submit an asynchronous real-time batch request for one subscription
+  category: RealTimeBatch
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllRealTimeUsageDataForSubscriptionInBatch
+  http: GET /resource/RealTime/Batch/Subscription/{subscriptionId}
+- name: get_real_time_usage_point_by_subscription_in_batch
+  description: Submit an asynchronous real-time batch request for one usage point
+  category: RealTimeBatch
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getRealTimeUsagePointBySubscriptionInBatch
+  http: GET /resource/RealTime/Batch/Subscription/{subscriptionId}/UsagePoint/{usagePointId}
+- name: get_all_real_time_interval_blocks_for_usage_point_meter_reading_in_subscription
+  description: List real-time interval blocks for a meter reading (provisional, not billing quality)
+  category: RealTimeIntervalBlock
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllRealTimeIntervalBlocksForUsagePointMeterReadingInSubscription
+  http: GET /resource/RealTime/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/MeterReading/{meterReadingId}/IntervalBlock
+- name: get_real_time_interval_block_for_usage_point_meter_reading_in_subscription
+  description: Retrieve one real-time interval block by id
+  category: RealTimeIntervalBlock
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getRealTimeIntervalBlockForUsagePointMeterReadingInSubscription
+  http: GET /resource/RealTime/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/MeterReading/{meterReadingId}/IntervalBlock/{intervalBlockId}
+- name: get_all_real_time_reading_types
+  description: List real-time reading types
+  category: RealTimeReadingType
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllRealTimeReadingTypes
+  http: GET /resource/RealTime/ReadingType
+- name: get_real_time_reading_type_by_id
+  description: Retrieve one real-time reading type by id
+  category: RealTimeReadingType
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getRealTimeReadingTypeById
+  http: GET /resource/RealTime/ReadingType/{readingTypeId}
+- name: get_customer_information_by_subscription
+  description: Retrieve retail customer information for a subscription
+  category: RetailCustomer
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getCustomerInformationBySubscription
+  http: GET /resource/Customer/{subscriptionId}
+- name: get_customer_account_in_subscription
+  description: List customer accounts in a subscription
+  category: RetailCustomer
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getCustomerAccountInSubscription
+  http: GET /resource/Customer/{subscriptionId}/CustomerAccount
+- name: get_customer_account_by_account_id_in_subscription
+  description: Retrieve one customer account by accountId
+  category: RetailCustomer
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getCustomerAccountByAccountIdInSubscription
+  http: GET /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}
+- name: get_customer_agreement_by_account_id_in_subscription
+  description: List customer agreements for an account
+  category: RetailCustomer
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getCustomerAgreementByAccountIdInSubscription
+  http: GET /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement
+- name: get_customer_agreement_by_customer_agreement_id
+  description: Retrieve one customer agreement by id
+  category: RetailCustomer
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getCustomerAgreementByCustomerAgreementId
+  http: GET /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}
+- name: get_all_service_location_by_customer_agreement_id_and_account_id_in_subscription
+  description: List service locations for a customer agreement
+  category: RetailCustomer
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllServiceLocationByCustomerAgreementIdAndAccountIdInSubscription
+  http: GET /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation
+- name: get_service_location_by_service_location_id
+  description: Retrieve one service location by id
+  category: RetailCustomer
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getServiceLocationByServiceLocationId
+  http: GET /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation/{serviceLocationId}
+- name: get_all_meters_for_service_location_in_subscription
+  description: List meters at a service location
+  category: RetailCustomer
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllMetersForServiceLocationInSubscription
+  http: GET /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation/{serviceLocationId}/Meter
+- name: get_meter_by_serial_number_id
+  description: Retrieve one meter by serial number
+  category: RetailCustomer
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getMeterBySerialNumberId
+  http: GET /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation/{serviceLocationId}/Meter/{serialNumber}
+- name: get_all_electric_power_usage_summaries
+  description: List usage summaries (billing period totals, with cost when FB=16 is authorized)
+  category: ElectricPowerUsageSummary
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllElectricPowerUsageSummaries
+  http: GET /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/UsageSummary
+- name: get_all_electric_power_usage_summaries_by_id
+  description: Retrieve one usage summary by id
+  category: ElectricPowerUsageSummary
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllElectricPowerUsageSummariesById
+  http: POST /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/UsageSummary/{usageSummaryId}
+- name: get_all_usage_points_by_subscription
+  description: List usage points (service delivery points) in a subscription
+  category: UsagePoint
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getAllUsagePointsBySubscription
+  http: GET /resource/Subscription/{subscriptionId}/UsagePoint
+- name: get_usage_points_for_subscription
+  description: Retrieve one usage point by id
+  category: UsagePoint
+  source_operation: openapi/con-edison-green-button-connect-my-data-swagger.json#getUsagePointsForSubscription
+  http: GET /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}
+coverage:
+  rest_operations: 37
+  tools_derived: 37
+  tools_published_by_provider: 0
+notes:
+- 'The four Batch tools and three RealTime Batch tools are asynchronous: they return HTTP 202 and the
+  result arrives as a notification POST to the third party (see asyncapi/con-edison-batch-notification-webhooks.yml).
+  An MCP server would need to model them as long-running jobs, not request/response tools.'
+- The token tool is an OAuth mechanism rather than a data tool and would normally live in the server transport
+  layer, not the tool list.
+- Real-time tools return provisional, non-billing-quality electric data for the last 24 hours only.

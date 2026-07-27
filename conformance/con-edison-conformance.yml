@@ -1,0 +1,109 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+also_derived_from: openapi/con-edison-green-button-connect-my-data-swagger.json
+note: >-
+  Conformance claims below are either cited by Con Edison in its own Document References table
+  (section 6 of the onboarding document) or derived from the published contract and live probes.
+  Green Button Alliance CERTIFICATION could not be confirmed from a primary GBA source: the GBA
+  publishes no certified-implementation directory (/certified and /certified-products both 404 on
+  2026-07-27) and Con Edison appears on greenbuttonalliance.org only as a sponsor member. The Postman
+  collection Con Edison publishes is titled "GBC Certification Third party V3.3", which is strong
+  circumstantial evidence that it runs the GBA certification suite — but it is Con Edison's artifact,
+  not a GBA register entry, so certification is recorded as unverified rather than true.
+standards:
+- id: naesb-req21-espi
+  name: NAESB REQ.21 Energy Services Provider Interface (ESPI)
+  conforms: true
+  evidence: >-
+    Cited as normative reference #1 in the onboarding document; base path /gbc/espi/1_1; resources are
+    Atom feeds carrying the espi namespace http://naesb.org/espi (ReadingType, IntervalReading,
+    ReadingQuality, timePeriod, powerOfTenMultiplier, uom).
+  url: https://www.naesb.org/espi_standards.asp
+- id: green-button-connect-my-data
+  name: Green Button Connect My Data (CMD)
+  conforms: true
+  version: V3.3 (certification suite named in the published Postman collection)
+  evidence: >-
+    Branded "Share My Data"; the whole third-party program implements CMD; live production base URI
+    returns 401 to anonymous calls; 37-path Swagger 2.0 contract published.
+  url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- id: green-button-alliance-certification
+  name: Green Button Alliance CMD certification
+  conforms: unverified
+  evidence: >-
+    Postman collection titled "GBC Certification Third party V3.3" and a supervised certification-test
+    stage in onboarding. No primary GBA register entry located; GBA publishes no certified-products
+    directory (HTTP 404 on /certified and /certified-products, 2026-07-27).
+- id: green-button-download-my-data
+  name: Green Button Download My Data (DMD)
+  conforms: true
+  evidence: >-
+    Customer-facing CSV/XML download of up to one year of usage from the authenticated account
+    dashboard, documented separately from CMD.
+  url: https://www.coned.com/en/save-money/make-better-energychoices-with-green-button
+- id: oauth2-rfc6749
+  name: The OAuth 2.0 Authorization Framework (RFC 6749)
+  conforms: true
+  evidence: >-
+    Cited as normative reference #2. authorization_code, refresh_token and client_credentials grants
+    documented with endpoints, Basic client authentication and standard error responses
+    (error=access_denied).
+- id: oauth2-bearer-rfc6750
+  name: OAuth 2.0 Bearer Token Usage (RFC 6750)
+  conforms: true
+  evidence: Cited as normative reference #3; token_type "Bearer" in the token response; 401 on anonymous resource calls.
+- id: atom-rfc4287
+  name: Atom Syndication Format
+  conforms: true
+  evidence: application/atom+xml produced by every operation; Feed/Entry/Link/Content definitions in the Swagger components.
+- id: tls-1-2-plus
+  name: TLS 1.2 or higher
+  conforms: true
+  evidence: >-
+    Onboarding document requires all third-party URLs to support TLS 1.2+; live probe of api.coned.com
+    negotiated TLSv1.3 (security/con-edison-domain-security.yml).
+- id: openid-connect
+  name: OpenID Connect Discovery
+  conforms: false
+  evidence: /.well-known/openid-configuration returns HTTP 404 on both www.coned.com and api.coned.com (probed 2026-07-27).
+- id: rfc8414-oauth-metadata
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns HTTP 404 on api.coned.com, apit.coned.com and www.coned.com.
+- id: rfc9457-problem-details
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence: 'Errors use a vendor JSON envelope {"Message": "..."}; no application/problem+json anywhere in the contract.'
+- id: rfc9116-security-txt
+  name: RFC 9116 security.txt
+  conforms: false
+  evidence: /.well-known/security.txt returns HTTP 404 on all Con Edison hosts probed.
+- id: rfc8594-sunset-header
+  name: RFC 8594 Sunset HTTP Header
+  conforms: false
+  evidence: No deprecation or sunset policy or header documented.
+- id: openapi-3
+  name: OpenAPI 3.x
+  conforms: false
+  evidence: The published definition is Swagger 2.0; no OpenAPI 3 document is offered.
+- id: mutual-tls
+  name: Mutual TLS client authentication
+  conforms: false
+  evidence: Not documented; client authentication is HTTP Basic at the token endpoint.
+- id: fapi
+  name: Financial-grade API (FAPI)
+  conforms: false
+  evidence: No FAPI profile, PAR, JARM or sender-constrained tokens documented.
+regulatory_context:
+  regime: green-button-voluntary under New York State PSC supervision
+  instruments:
+  - NY PSC Case 16-M-0411 — Joint Utilities Supplemental DSIP; Con Edison committed to implement phase one of Green Button Connect by end of 2017
+  - NY PSC Case 20-M-0082 — Order Adopting a Data Access Framework (April 15, 2021)
+  - Customer Data Access Tariff and the Share My Data Customer Data Privacy and Protection Rules, cited in Con Edison's own third-party FAQ
+  note: >-
+    State-level regulatory supervision of a voluntary standard. The United States has no federal
+    energy consumer data right, and no accreditation body sits between Con Edison and a third party —
+    access is a bilateral agreement (Data Security Agreement), not CDR-style accreditation.
+certifications_published: []
+compliance_program_published: false
