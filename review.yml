@@ -1,0 +1,656 @@
+aid: con-edison
+name: Con Edison
+review:
+  question: >-
+    Does Con Edison publish a documented public API — either a consumer energy
+    data API (Green Button / Consumer Data Right style) or an open grid/market
+    data API — and if a mandate applies, is it actually implemented?
+  answer: true
+  date: '2026-07-27'
+  reviewer: API Evangelist
+  method: >-
+    Anonymous HTTP probing of coned.com, api.coned.com, apit.coned.com and the
+    usual developer/docs/data subdomains; enumeration of the site's own
+    sitemap_coned_en.xml (822 URLs); download and text extraction of Con
+    Edison's publicly linked Share My Data onboarding and FAQ PDFs; retrieval
+    of the Swagger 2.0 definition and Postman collection/environment those PDFs
+    link to; unauthenticated calls against the production and test Green Button
+    base URIs; and unauthenticated queries against the ArcGIS Online item and
+    feature services behind the Hosting Capacity Map. No credentials were used,
+    no account was created, and no registration was submitted.
+
+energyDataPosture:
+  homeMarket: United States — New York (New York City and Westchester County; sibling utility Orange & Rockland covers parts of NY, NJ and PA)
+  tier: >-
+    utility-retailer — Consolidated Edison Company of New York, Inc. (CECONY),
+    an investor-owned electric, gas and steam distribution utility and the
+    billing entity for the customer. Wholesale markets are run by NYISO;
+    competitive supply is sold by ESCOs. Parent: Consolidated Edison, Inc.
+  regulator: >-
+    New York State Public Service Commission / Department of Public Service —
+    https://dps.ny.gov/ (HTTP 403 to an anonymous programmatic GET; the site
+    is bot-blocked, not absent)
+
+  mandateRegime: green-button-voluntary
+  mandateStatus: live-implemented
+  mandateVerbatim: >-
+    The United States has no federal energy consumer data right. There is no
+    statute or federal rule compelling Con Edison to publish customer energy
+    data through an API, and nothing equivalent to Australia's Consumer Data
+    Right (energy) or Ontario Regulation 633/21 applies. Green Button is a
+    NAESB/NIST-derived standard adopted here without federal compulsion, so the
+    regime is recorded as green-button-voluntary.
+
+    IMPORTANT QUALIFICATION, recorded so the record is not read as pure
+    voluntarism: Con Edison's adoption sits inside a New York State regulatory
+    framework that is stronger than "voluntary" and weaker than a statutory
+    consumer data right. In the Joint Utilities' Supplemental Distributed
+    System Implementation Plan filed in NY PSC Case 16-M-0411, Con Edison
+    committed to implement the first phase of Green Button Connect by the end
+    of 2017. The Commission subsequently issued an Order Adopting a Data Access
+    Framework in Case 20-M-0082 (April 15, 2021). Con Edison's own third-party
+    FAQ states that third parties "must adhere to the Customer Data Privacy and
+    Protection Rules outlined in the Share My Data platform's terms and
+    conditions, as well as the requirements set forth in the Customer Data
+    Access Tariff" and that it treats customer information as confidential "in
+    accordance with all legal and regulatory requirements, including those set
+    by the New York Public Utilities Commission." A tariff and a Commission
+    order are regulator-supervised instruments. This is state-level regulatory
+    supervision of a voluntary standard — NOT a consumer data right, and not
+    designated-data-holder machinery. The 'other' enum value was considered and
+    rejected because it would erase the fact that the standard implemented is
+    Green Button.
+  mandateEvidence:
+    verified:
+      - >-
+        LIVE PRODUCTION BASE URI. GET
+        https://api.coned.com/gbc/espi/1_1/resource/ReadServiceStatus returned
+        HTTP/2 401 with content-length 0 on 2026-07-27, anonymously. POST to
+        https://api.coned.com/gbc/espi/1_1/oauth/Token with
+        grant_type=client_credentials and no credentials returned HTTP 401 with
+        body {"Message":"Unauthorized. Access token is missing or invalid."}.
+        The host resolves to dcxprod-api-apim-tm.trafficmanager.net (Azure API
+        Management). A 401 from the exact ESPI base path documented by the
+        utility is a live, standards-shaped, OAuth-guarded implementation — not
+        a claim.
+      - >-
+        LIVE TEST BASE URI. GET
+        https://apit.coned.com/gbc/espi/1_1/resource/ReadServiceStatus also
+        returned HTTP 401 anonymously on 2026-07-27, matching the base_url
+        value shipped in Con Edison's own published Postman environment.
+      - >-
+        PUBLISHED MACHINE-READABLE CONTRACT. Con Edison's own onboarding PDF
+        links a Swagger 2.0 definition; it was fetched anonymously on
+        2026-07-27 (HTTP 200, 58,250 bytes) and parses as valid JSON. title
+        "DCX GBC API V2", basePath "/gbc/espi/1_1", schemes ["https"], 37
+        paths, tags ApplicationInformation, Authorization, ServiceStatus,
+        Batch, IntervalBlock, LocalTimeParameters, MeterReading, ReadingType,
+        RealTimeBatch, RealTimeIntervalBlock, RealTimeReadingType,
+        RetailCustomer, ElectricPowerUsageSummary, UsagePoint. Saved verbatim
+        to openapi/con-edison-green-button-connect-my-data-swagger.json.
+      - >-
+        PUBLISHED POSTMAN ARTIFACTS. The collection fetched anonymously (HTTP
+        200, 55,587 bytes) is named "GBC Certification Third party V3.3" — the
+        Green Button Alliance CMD certification test suite version — and the
+        environment (HTTP 200, 2,571 bytes) carries base_url =
+        https://apit.coned.com/gbc/espi/1_1. Both parse and are saved verbatim
+        under collections/.
+      - >-
+        MAINTAINED, DATED DOCUMENTATION. The Third-Party Technical Onboarding
+        Document (Document Version 4.4, Creation Date 3/14/2018, Last Update
+        Date 5/7/2026) is publicly downloadable, 35 pages, and specifies the
+        OAuth 2.0 authorization-code and client-credentials flows, the token
+        endpoints, ESPI functional-block scopes, batch semantics, real-time
+        API behaviour, rate limits, token lifetimes, DST interval handling and
+        powerOfTenMultiplier arithmetic. It cites NAESB REQ.21 and RFC
+        6749/6750 as its normative references.
+      - >-
+        DOWNLOAD MY DATA is separately documented at
+        https://www.coned.com/en/save-money/make-better-energychoices-with-green-button
+        (HTTP 200): "With Green Button Download My Data, you can access and
+        analyze up to one year of energy use data in a simple spreadsheet,"
+        available in CSV or XML from the authenticated account dashboard.
+    notVerified:
+      - >-
+        GREEN BUTTON ALLIANCE CERTIFICATION COULD NOT BE CONFIRMED FROM A
+        PRIMARY GBA SOURCE. https://www.greenbuttonalliance.org/certification
+        (HTTP 200) describes the CMD and DMD testing programs but publishes no
+        certified-implementation directory on that page; Con Edison appears
+        there only as a GBA Sponsor Member, which is membership, not
+        certification. https://www.greenbuttonalliance.org/certified and
+        /certified-products both returned HTTP 404. A vendor blog (Highstep
+        Technologies) claims Con Edison was the first Green Button Certified
+        utility in New York State; that is a third-party marketing claim and is
+        NOT treated as verification. The Postman collection being titled "GBC
+        Certification Third party V3.3" is strong circumstantial evidence that
+        Con Edison runs against the GBA certification suite, but it is Con
+        Edison's own artifact, not a GBA register entry.
+      - >-
+        No response payload was ever obtained from the API. Every call was 401.
+        Nothing about actual data shape, conformance, or uptime is asserted
+        beyond what Con Edison's own Swagger and PDFs document.
+      - >-
+        The NY PSC order text could not be read directly — the Data Access
+        Framework PDF on jointutilitiesofny.org is image/compressed and did not
+        yield quotable directive language, and dps.ny.gov returns HTTP 403 to
+        programmatic requests. Case numbers and dates above come from search
+        result summaries and Con Edison's own FAQ references to the Customer
+        Data Access Tariff, and are labelled accordingly.
+  mandateStatusReasoning: >-
+    Graded live-implemented, the strictest available grade, and it is earned on
+    the evidence rather than on a press release. Three independent things line
+    up: (1) the exact ESPI production base URI Con Edison documents answers
+    anonymously with a 401 and an OAuth error body, so the surface exists and
+    is guarded; (2) a 37-path Swagger 2.0 contract for that base path is
+    published by Con Edison and parses; (3) a versioned onboarding document
+    revised in May 2026 describes the whole OAuth 2.0 + ESPI flow in operating
+    detail, including rate limits and data latency, which is the kind of thing
+    only a running system produces. This is deliberately NOT graded
+    live-claimed-unverified: no verification depended on a compliance page or a
+    marketing statement.
+
+  dataStandard: >-
+    Green Button Connect My Data — NAESB REQ.21 Energy Services Provider
+    Interface (ESPI). Version evidence: base path /gbc/espi/1_1 (ESPI 1.1);
+    Swagger info.title "DCX GBC API V2"; Postman collection "GBC Certification
+    Third party V3.3" (Green Button CMD v3.3). Green Button Download My Data
+    (CSV/XML) is separately offered. Transport is Atom/ESPI XML. Authorization
+    is OAuth 2.0 per RFC 6749 with Bearer tokens per RFC 6750. The onboarding
+    document notes that real-time APIs are supported "even though they are not
+    part of the GBC V3.3 Standard" — an explicit, documented extension beyond
+    the standard. No CDR Consumer Data Standards, OCPP, OCPI, OpenADR, IEEE
+    2030.5 or IEC CIM 61968/61970 reference was found anywhere on coned.com.
+    The grid-data side uses no energy standard at all — it is Esri ArcGIS REST.
+
+  consumerDataApi:
+    available: true
+    detail: >-
+      Yes — and it is the real thing, not a file download. A registered third
+      party can obtain an individual customer's electric and gas interval
+      usage, usage summaries, billing information and retail customer records
+      programmatically, after that customer consents through Con Edison's or
+      ORU's own authorization screen. Documented resources include
+      /resource/Subscription/{subscriptionId}/UsagePoint,
+      .../MeterReading/{meterReadingId}/IntervalBlock,
+      .../UsagePoint/{usagePointId}/UsageSummary,
+      /resource/Customer/{subscriptionId}/CustomerAccount/.../ServiceLocation/.../Meter,
+      /resource/Authorization, /resource/ReadingType,
+      /resource/LocalTimeParameters, asynchronous /resource/Batch/* (HTTP 202
+      then a notification to the third party's notify URI, 200 MB chunking,
+      results deleted after 2 days) and a non-standard /resource/RealTime/*
+      family. Granularity is 5-minute for commercial AMI electric, 15-minute
+      for residential AMI electric and legacy interval meters, 1-hour for gas
+      AMI, monthly for non-interval meters. History is capped at 2 years;
+      real-time is electric-only, last 24 hours, 45-minute latency, explicitly
+      "not billing quality." Consent duration is customer-chosen (until
+      revoked / fixed period / one-time 24 hours), revocable at any time, and
+      auto-revoked after 365 days of third-party inactivity. Solar accounts
+      return NET consumption.
+  marketDataOpen:
+    available: true
+    detail: >-
+      Yes, on the distribution-grid axis — anonymously, with no key and no
+      agreement. Con Edison's Hosting Capacity "About" page states "REST API
+      access allows users to overlay the Con Edison Hosting Capacity Map data
+      with their own GIS systems and mapping tools. The REST API endpoints are
+      available within the 'Rest API' tab on the Hosting Capacity map." The
+      backing Esri ArcGIS Online organization is conEd (customBaseUrl
+      maps.arcgis.com); the public Web Experience item
+      d9d758c7736b44909dc3781937ca2ed5 has access "public" and is owned by
+      HCV_Support, whose content search returns 69 public items including 40+
+      feature services on
+      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services.
+      Five were probed unauthenticated on 2026-07-27 and all returned HTTP 200
+      with layer metadata: CECONY_NodalHCV_Prod ("CECONY Segmented Hosting
+      Capacity"; layers "Hosting Capacity for 3PH Segments", "No Hosting
+      Capacity for 1PH and 2PH Segments", "Substation Level System Data"),
+      CECONY_EVM_Prod ("Feature layers for EV Transformers"; 460v and 208v
+      summer capacity), CE_NWS_Networks_Prod ("Non-Wires Solutions Project
+      Networks"), CECONY_33Kv_Prod ("CECONY's 33kv layer"), and IEDR_CECONY
+      ("CECONY Hosting Capacity layers to be consumed by the IEDR"; charge and
+      discharge capacity for 3PH feeders). Equivalent ORU_* services exist.
+      Published content also covers Locational System Relief Value eligibility,
+      network and structure hosting capacity, disadvantaged and overburdened
+      communities, alternative fuel corridors and cost sharing. Con Edison's
+      own caveat: the data "is being provided for informational purposes only
+      and is not intended to be a substitute for the established interconnection
+      application process."
+    scopeLimit: >-
+      This is DISTRIBUTION-GRID and system data, not wholesale market data. Con
+      Edison does not run a market. Locational prices, load, fuel mix and
+      settlement data for New York are published by NYISO, and national data by
+      EIA — neither is Con Edison's to publish, and neither is claimed here. No
+      Con Edison open data portal exists (data.coned.com does not resolve), and
+      no outage-map JSON feed was located.
+    split: >-
+      THIS IS THE FINDING. Con Edison is wide open on one axis and fully
+      accredited on the other, and both are deliberate. Grid data — hosting
+      capacity, EV transformer headroom, non-wires-solutions networks, 33kV
+      feeders — is served to anyone, anonymously, over documented REST, with a
+      public map on top. Customer data — the same utility, the same company —
+      requires a signed Data Security Agreement, a reviewed registration, a
+      technical onboarding form, 30 to 60 days of supervised certification
+      testing, and per-customer OAuth consent before a single interval reading
+      moves. The gate is not laziness on either side; it is the difference
+      between data about the wires and data about a person. Compared with BC
+      Hydro (closed on both axes) and with Ontario distributors under Reg
+      633/21 (mandated CMD, no comparable open grid REST surface), Con Edison
+      is the United States example of an unmandated utility that built the
+      consumer API anyway — under state-regulator supervision — and that also
+      publishes grid data more openly than most mandated peers.
+
+  accessGate: application-approval
+  accessGateDetail: >-
+    Two entirely different gates in one company.
+
+    GREEN BUTTON CONNECT MY DATA — application-approval, and slow. Exactly what
+    a developer must do, from Con Edison's own FAQ and onboarding document:
+    (1) complete the online Third-Party Company Registration Form at
+    https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    (HTTP 200) — separately for ORU if ORU accounts are in scope;
+    (2) complete and sign the Data Security Agreement and accept the terms and
+    conditions;
+    (3) submit the technical onboarding registration form (all URLs supplied
+    must be reachable from the Con Edison network and support TLS 1.2 or
+    higher);
+    (4) receive client_id, client_secret and a Registration Access Token by
+    email from the onboarding team;
+    (5) build your own customer-authorization portal — Con Edison states
+    "we expect third-party vendors to create their own websites for managing
+    customer authorizations" and, bluntly, "con Edison is unable to support API
+    development for third parties. They must have their own technical team for
+    the full setup";
+    (6) complete supervised testing in the TEST environment — note that "third-
+    party vendors cannot access the GBC test environment" independently; the
+    onboarding team drives it;
+    (7) submit the completed API testing checklist for review;
+    (8) re-register with production details.
+    Stated timelines: 30 to 60 days for technical onboarding; 90 days to
+    complete registration testing or the registration is put on hold; 90 days
+    of silence after the welcome email or DSA voids the submission. Cost: none
+    ("There is no cost to use Share My Data"). Registration, once complete,
+    does not expire. Contacts: ShareMyData@coned.com and
+    dlsharemydatatech@coned.com / ShareMyDataTech@coned.com. No accreditation
+    body is involved — this is a bilateral utility agreement, not CDR-style
+    accreditation.
+
+    HOSTING CAPACITY REST — effectively none. Open the map or call the ArcGIS
+    feature services directly; no signup, no key, no agreement, HTTP 200
+    anonymously.
+
+    DOWNLOAD MY DATA — customer-account-required. Sign into the Con Edison
+    account dashboard and download your own CSV or XML.
+  authModel: >-
+    OAuth 2.0 (RFC 6749) with Bearer tokens (RFC 6750), over TLS 1.2+.
+    Authorization endpoint is on the utility web property, not the API host:
+    https://www.coned.com/en/oauth/authorize (production) and
+    https://uat10.coned.com/en/oauth/authorize (test); ORU uses
+    https://www.oru.com/en/ and https://uat10.oru.com/en/. Token endpoint is
+    https://api.coned.com/gbc/espi/1_1/oauth/Token (production) and
+    https://apit.coned.com/gbc/espi/1_1/oauth/token (test), authenticated with
+    HTTP Basic base64(client_id:client_secret).
+    Grants: authorization_code (per-customer, code expires in 1 minute, single
+    use), refresh_token (refresh token expires after 1 year unused; Con Edison
+    does not store it — lose it and the customer must re-authorize), and
+    client_credentials for the Third-Party Client Access Token (scope=FB=34_35)
+    used for bulk access across all actively authorized customers.
+    Access tokens live 3600 seconds; caching is required by the onboarding doc.
+    Scopes are ESPI functional blocks, e.g.
+    FB=1_3_4_5_7_8_10_15_16_51_53_56_57_58_60;IntervalDuration=Monthly_3600_900_300;BlockDuration=Monthly_Daily;HistoryLength=63072000;BR=<BulkId>.
+    Mandatory minimums: 1,3,4 for consumption; 1,3 for billing; 51,53 for
+    retail customer. Rate limit: 50 token-endpoint calls per minute (excluding
+    the authorization_code flow); no rate limit on other endpoints.
+    The Swagger document declares NO securityDefinitions — the security scheme
+    is documented in prose and in the Postman collection, not in the contract.
+    https://www.coned.com/.well-known/openid-configuration returned HTTP 404;
+    no OpenID Connect discovery document is served. No mTLS and no accreditation
+    scheme applies.
+    The Hosting Capacity ArcGIS services require no authentication at all.
+
+probes:
+  - url: https://www.coned.com/
+    status: 200
+    note: Corporate and customer site. robots.txt allows all and lists sitemap_coned_en.xml, sitemap_coned_es.xml and oru.com's sitemap.
+  - url: https://coned.com/
+    status: 200
+    note: Redirects to www.
+  - url: https://developer.coned.com/
+    status: 000
+    note: DNS/connection failure — no developer subdomain.
+  - url: https://developers.coned.com/
+    status: 000
+    note: DNS/connection failure.
+  - url: https://apis.coned.com/
+    status: 000
+    note: DNS/connection failure.
+  - url: https://docs.coned.com/
+    status: 000
+    note: DNS/connection failure.
+  - url: https://data.coned.com/
+    status: 000
+    note: DNS/connection failure — no open data portal subdomain.
+  - url: https://sharemydata.coned.com/
+    status: 000
+    note: DNS/connection failure.
+  - url: https://greenbutton.coned.com/
+    status: 000
+    note: DNS/connection failure.
+  - url: https://api.coned.com/
+    status: 404
+    note: >-
+      Host EXISTS and answers. dig resolves it to
+      dcxprod-api-apim-tm.trafficmanager.net / 40.76.89.107 — Azure API
+      Management behind Traffic Manager. Root path 404s; the Green Button
+      surface lives under /gbc/espi/1_1.
+  - url: https://api.coned.com/gbc/espi/1_1/resource/ReadServiceStatus
+    status: 401
+    note: >-
+      HTTP/2 401, content-length 0, anonymous, 2026-07-27. THE production
+      Green Button Connect base URI is live and OAuth-guarded. Primary
+      mandate-status evidence.
+  - url: https://api.coned.com/gbc/espi/1_1/oauth/Token
+    status: 401
+    note: >-
+      POST with grant_type=client_credentials and no credentials returned
+      {"Message":"Unauthorized. Access token is missing or invalid."}. A bare
+      GET to the same path returns 404 (method-specific routing).
+  - url: https://apit.coned.com/gbc/espi/1_1/resource/ReadServiceStatus
+    status: 401
+    note: Test environment base URI live and guarded; matches the published Postman environment's base_url.
+  - url: https://api.coned.com/openapi.json
+    status: 404
+    note: No spec at the conventional path.
+  - url: https://api.coned.com/swagger.json
+    status: 404
+    note: No spec at the conventional path.
+  - url: https://api.coned.com/.well-known/openid-configuration
+    status: 404
+    note: No OIDC discovery on the API host.
+  - url: https://www.coned.com/.well-known/openid-configuration
+    status: 404
+    note: No OIDC discovery on the web host.
+  - url: https://www.coned.com/developers
+    status: 404
+    note: Hard 404 — no developer area.
+  - url: https://www.coned.com/api
+    status: 404
+    note: Hard 404.
+  - url: https://www.coned.com/openapi.json
+    status: 404
+    note: Hard 404.
+  - url: https://www.coned.com/swagger.json
+    status: 404
+    note: Hard 404.
+  - url: https://www.coned.com/.well-known/security.txt
+    status: 404
+    note: No security.txt published.
+  - url: https://www.coned.com/robots.txt
+    status: 200
+    note: "User-agent: * / Allow: / plus three sitemap declarations."
+  - url: https://www.coned.com/sitemap_coned_en.xml
+    status: 200
+    note: >-
+      146 KB, 822 URLs, enumerated. Confirms there is no /developers,
+      /developer-portal, /open-data or /api section; the only data-access
+      surfaces are /accounts-billing/share-energy-usage-data/* and
+      /business-partners/hosting-capacity/*.
+  - url: https://www.coned.com/en/business-partners/access-customer-data
+    status: 200
+    note: >-
+      Navigation hub. Names Green Button Connect My Data ("Customers can
+      approve and automate the secure transfer of their own energy usage data
+      to your company"), Electronic Data Interchange for DER suppliers, and
+      Share My Data. Links to /en/register/third-party-pre-register and to the
+      GBC registration page.
+  - url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+    status: 200
+    note: >-
+      THE developer-facing portal. Three steps — How It Works, Onboarding,
+      Registration — and it serves the onboarding and FAQ PDFs to anonymous
+      visitors. Not self-serve.
+  - url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    status: 200
+    note: Third-Party Company Registration Form.
+  - url: https://www.coned.com/en/accounts-billing/share-energy-usage-data
+    status: 200
+    note: Share My Data / request past energy bills and data landing page.
+  - url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+    status: 200
+    note: Customer-facing "Download & Share Your Data".
+  - url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    status: 200
+    note: Customer-facing FAQ.
+  - url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    status: 200
+    note: >-
+      "Con Edison/Orange & Rockland Green Button Connect Third-Party Technical
+      Onboarding Document", Document Version 4.4, Creation Date 3/14/2018, Last
+      Update Date 5/7/2026, 35 pages, 1,151,493 bytes. Source of every endpoint,
+      scope, token-lifetime and rate-limit fact recorded above. Also mirrored at
+      https://edge-e-dcxprod-web-bechbkdqagefb9ge.a03.azurefd.net/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    status: 200
+    note: >-
+      "Share My Data FAQ for Third Party Vendors", 201,733 bytes. Source of the
+      registration steps, 90-day windows, "no cost", 50 requests/minute token
+      limit, HTTPS+OAuth 2.0 security statement, and the "con Edison is unable
+      to support API development for third parties" line.
+  - url: https://edge-e-dcx-downloads-prod-gjf6ega8bmh8crfh.a01.azurefd.net/gbc-api-defintions/swagger-cert.json
+    status: 200
+    note: >-
+      Fetched with the SAS query string published verbatim in the onboarding
+      PDF (sp=r, st=2024-08-29, se=2031-08-29). 58,250 bytes, valid JSON,
+      Swagger 2.0, 37 paths, basePath /gbc/espi/1_1, host placeholder
+      "provided-by-coned", no securityDefinitions. Saved verbatim to
+      openapi/con-edison-green-button-connect-my-data-swagger.json.
+  - url: https://edge-e-dcx-downloads-prod-gjf6ega8bmh8crfh.a01.azurefd.net/gbc-api-defintions/postman-collection.json
+    status: 200
+    note: >-
+      Fetched with the published SAS query string (st=2026-04-28,
+      se=2031-08-29). 55,587 bytes, valid Postman v2.1, named "GBC
+      Certification Third party V3.3", 39 requests. Saved verbatim under
+      collections/.
+  - url: https://edge-e-dcx-downloads-prod-gjf6ega8bmh8crfh.a01.azurefd.net/gbc-api-defintions/postman-environment.json
+    status: 200
+    note: >-
+      2,571 bytes, valid JSON, named "GBC Certification_ThirdParty_Env v3.3",
+      base_url = https://apit.coned.com/gbc/espi/1_1, all secret values empty.
+      Saved verbatim under collections/.
+  - url: https://www.coned.com/en/save-money/make-better-energychoices-with-green-button
+    status: 200
+    note: >-
+      Green Button Download My Data — "up to one year of energy use data in a
+      simple spreadsheet", CSV or XML, from the authenticated dashboard. "This
+      data is for your personal use; we will not share it without your
+      permission." No CMD, ESPI or certification reference on this page.
+  - url: https://www.coned.com/en/business-partners/hosting-capacity
+    status: 200
+    note: >-
+      Public hosting capacity map, no login. Links the Web Experience app and
+      per-borough fault current maps. Contact DGExpert@conEd.com.
+  - url: https://www.coned.com/en/business-partners/hosting-capacity/about
+    status: 200
+    note: >-
+      Source of the REST API statement and of the "informational purposes only"
+      caveat. Lists max/min hosting capacity, existing DG, anti-islanding,
+      network/non-network, storage and EV load capacity, peak and minimum load
+      duration curves, forecast 8,760-hour load, LSRV eligibility and
+      substation-level aggregates.
+  - url: https://experience.arcgis.com/experience/d9d758c7736b44909dc3781937ca2ed5
+    status: 200
+    note: >-
+      "Con Edison Hosting Capacity Web Application" — ArcGIS Web Experience,
+      item access "public", owner HCV_Support, modified 2026-06.
+  - url: https://coned.maps.arcgis.com/sharing/rest/portals/self?f=json
+    status: 200
+    note: urlKey "conEd", customBaseUrl maps.arcgis.com — confirms a Con Edison ArcGIS Online organization.
+  - url: https://www.arcgis.com/sharing/rest/search?q=owner:HCV_Support
+    status: 200
+    note: >-
+      total 69 public items — CECONY_* and ORU_* feature services, web maps and
+      web apps for segmented/network hosting capacity, EV, storage, NWS,
+      disadvantaged communities, LSRV, cost sharing and the IEDR layers.
+  - url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_NodalHCV_Prod/FeatureServer?f=json
+    status: 200
+    note: >-
+      Anonymous. "CECONY Segmented Hosting Capacity" — layers "Hosting Capacity
+      for 3PH Segments", "No Hosting Capacity for 1PH and 2PH Segments",
+      "Substation Level System Data".
+  - url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_EVM_Prod/FeatureServer?f=json
+    status: 200
+    note: Anonymous. "Feature layers for EV Transformers" — 460v and 208v summer capacity.
+  - url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CE_NWS_Networks_Prod/FeatureServer?f=json
+    status: 200
+    note: Anonymous. "Non-Wires Solutions Project Networks".
+  - url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_33Kv_Prod/FeatureServer?f=json
+    status: 200
+    note: Anonymous. "CECONY's 33kv layer for production".
+  - url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/IEDR_CECONY/FeatureServer?f=json
+    status: 200
+    note: >-
+      Anonymous. "CECONY Hosting Capacity layers to be consumed by the IEDR" —
+      charge and discharge capacity for 3PH feeders plus EV transformer layers.
+      IEDR is New York's Integrated Energy Data Resource.
+  - url: https://www.oru.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+    status: 200
+    note: Orange & Rockland runs the identical registration process; the same GBC platform serves both data custodians.
+  - url: https://www.coned.com/en/about-us/company-information
+    status: 200
+    note: Company information page.
+  - url: https://www.conedison.com/
+    status: 200
+    note: Parent, Consolidated Edison, Inc.
+  - url: https://www.coned.com/en/conedison-privacy-statement
+    status: 200
+    note: Privacy statement.
+  - url: https://www.coned.com/en/accounts-billing/dashboard/billing-and-usage/terms-of-use
+    status: 200
+    note: Billing-and-usage terms of use (in sitemap).
+  - url: https://www.greenbuttonalliance.org/certification
+    status: 200
+    note: >-
+      Describes GBA CMD and DMD certification testing. No certified-utility
+      directory on the page. Con Edison appears only in the sponsor logos as a
+      GBA Sponsor Member.
+  - url: https://www.greenbuttonalliance.org/certified
+    status: 404
+    note: No certified-products directory at this path.
+  - url: https://www.greenbuttonalliance.org/certified-products
+    status: 404
+    note: No certified-products directory at this path.
+  - url: https://api.github.com/orgs/coned
+    status: 404
+    note: No Con Edison GitHub organization.
+  - url: https://api.github.com/users/coned
+    status: 200
+    note: >-
+      github.com/coned is a personal USER account (id 12196892), not the
+      company. Deliberately NOT recorded as a GitHubOrganization.
+  - url: https://dps.ny.gov/
+    status: 403
+    note: Regulator. Bot-blocked to programmatic GET; recorded as the regulator anyway.
+  - url: https://www.linkedin.com/company/con-edison
+    status: 200
+    note: Corporate LinkedIn presence.
+
+findings:
+  summary: >-
+    Con Edison is the strongest United States counter-example to the assumption
+    that an unmandated utility publishes nothing. No federal energy consumer
+    data right exists; under New York PSC supervision — a DSIP commitment in
+    Case 16-M-0411, the Data Access Framework in Case 20-M-0082, and a Customer
+    Data Access Tariff — Con Edison built and runs a real Green Button Connect
+    My Data implementation. It was verified, not taken on trust: the documented
+    production base URI https://api.coned.com/gbc/espi/1_1 answers anonymously
+    with HTTP 401 and an OAuth error body, a 37-path Swagger 2.0 contract for
+    that exact base path is published and parses, a Postman collection named
+    for the Green Button CMD v3.3 certification suite is published alongside
+    it, and a 35-page onboarding document revised 2026-05-07 documents the
+    OAuth flows, ESPI functional-block scopes, token lifetimes, batch
+    semantics, rate limits and data latency. What could not be verified is
+    Green Button Alliance certification from a primary GBA source — the
+    certification page publishes no directory and lists Con Edison only as a
+    sponsor. The access gate is heavy and unambiguous: registration, a signed
+    Data Security Agreement, a technical onboarding form, 30 to 60 days of
+    supervised certification testing, and Con Edison's flat statement that it
+    "is unable to support API development for third parties." The split is the
+    story — the same company serves its distribution-grid hosting capacity, EV
+    transformer headroom, non-wires-solutions networks and 33kV feeder data to
+    anyone over anonymous ArcGIS REST with no key and no agreement, while a
+    single customer interval reading requires a signed contract and per-customer
+    OAuth consent.
+  apisListed: 2
+  developerPortal: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  portalConfirmed: true
+  portalConfirmedCaveat: >-
+    Live HTTP 200, public, developer-facing, and it serves real machine-readable
+    artifacts (Swagger + Postman) to anonymous visitors. It is NOT self-serve —
+    no keys are issued from it. That is recorded separately as
+    accessGate: application-approval.
+  openapiHarvested: true
+  specsCount: 1
+  gated: true
+  contrast: >-
+    Against BC Hydro, profiled the same day: BC Hydro is unmandated and closed
+    on both axes — Green Button as a file download behind a customer login, no
+    base URI, no spec, no open grid data. Con Edison is equally unmandated in
+    the statutory sense and open on both axes in different ways: a live,
+    contract-backed consumer API behind a heavy contractual gate, and genuinely
+    anonymous grid data. Against an Ontario distributor compelled by Regulation
+    633/21, Con Edison shows that state-regulator supervision plus a utility's
+    own AMI business case can produce a deeper implementation — real-time
+    endpoints beyond GBC v3.3, bulk client-credentials access, batch
+    notification — than a bare compliance mandate typically does.
+
+sources:
+  - url: https://www.coned.com/en/about-us/company-information
+    type: About
+    note: Company identity.
+  - url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+    type: Documentation
+    note: Third-party developer onboarding portal; serves the onboarding and FAQ PDFs.
+  - url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    type: Documentation
+    note: Third-Party Technical Onboarding Document v4.4, last updated 2026-05-07. Primary technical source.
+  - url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    type: FAQ
+    note: Share My Data FAQ for Third Party Vendors. Primary process source.
+  - url: https://www.coned.com/en/business-partners/access-customer-data
+    type: Documentation
+    note: Business-partner data access hub; also names EDI for DER suppliers.
+  - url: https://www.coned.com/en/save-money/make-better-energychoices-with-green-button
+    type: Documentation
+    note: Green Button Download My Data.
+  - url: https://www.coned.com/en/business-partners/hosting-capacity/about
+    type: Documentation
+    note: States REST API access to the Hosting Capacity Map data.
+  - url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services
+    type: APIReference
+    note: Anonymous ArcGIS REST feature services carrying CECONY and ORU grid data.
+  - url: https://www.naesb.org/espi_standards.asp
+    type: Standard
+    note: NAESB REQ.21 ESPI — cited as normative reference by Con Edison's own onboarding document.
+  - url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+    type: Standard
+    note: Green Button Connect My Data.
+  - url: https://www.greenbuttonalliance.org/certification
+    type: Standard
+    note: GBA certification programs. No certified-utility directory; Con Edison listed only as a sponsor member.
+
+actions:
+  apisYmlUpdated: true
+  openapiDirCreated: true
+  collectionsDirCreated: true
+  reason: >-
+    Two APIs are listed and both are real. The Green Button Connect My Data API
+    is backed by a verbatim-saved Swagger 2.0 definition and Postman collection
+    and environment published by Con Edison itself, and by a live 401 from the
+    documented production base URI. The Hosting Capacity Map REST API is listed
+    because Con Edison documents REST access in its own words and the backing
+    ArcGIS feature services return HTTP 200 anonymously. Nothing was invented:
+    the Swagger declares no securityDefinitions, so the auth scheme is recorded
+    in review.yml from prose and the Postman collection rather than being
+    written into the spec, and the spec was saved exactly as fetched with no
+    conversion to OpenAPI 3. Green Button Alliance certification is NOT claimed
+    because no primary GBA source could be found. No outage feed, no EDI
+    endpoint and no NYISO or EIA data were attributed to Con Edison.

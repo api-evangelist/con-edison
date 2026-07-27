@@ -1,0 +1,2120 @@
+{
+	"info": {
+		"_postman_id": "35167891-148b-48c9-99a1-f4a2a2671ad4",
+		"name": "GBC Certification Third party V3.3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29128989"
+	},
+	"item": [
+		{
+			"name": "Token API",
+			"item": [
+				{
+					"name": "Create CAT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);postman.setGlobalVariable(\"CAT\", jsonData.access_token);",
+									"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setGlobalVariable(\"grantType\",'client_credentials');postman.setGlobalVariable(",
+									"\"Accept\",'application/atom+xml');postman.setGlobalVariable(",
+									"\"content-type\",'application/atom+xml');"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{clientSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{clientId}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "FB=34_35",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/oauth/Token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"oauth",
+								"Token"
+							]
+						},
+						"description": "Create token for accessing GBC APIs"
+					},
+					"response": []
+				},
+				{
+					"name": "Create TP Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);postman.setGlobalVariable(\"access_token\", jsonData.access_token);",
+									"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setGlobalVariable(\"grantType\",'client_credentials');postman.setGlobalVariable(",
+									"\"Accept\",'application/atom+xml');postman.setGlobalVariable(",
+									"\"content-type\",'application/atom+xml');"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{clientSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{clientId}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "redirect_uri",
+									"value": "redirect_uri",
+									"type": "string"
+								},
+								{
+									"key": "refresh_token",
+									"value": "{{refresh_token}}",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "FB=1_3_4_5_7_10_15_16_51_53_56_57_58_60",
+									"type": "string"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/oauth/Token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"oauth",
+								"Token"
+							]
+						},
+						"description": "Create token for accessing GBC APIs"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Registration",
+			"item": [
+				{
+					"name": "Get Third Party Applications by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/atom+xml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/atom+xml"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{registration_access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/resource/ApplicationInformation/{{applicationInformationId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"resource",
+								"ApplicationInformation",
+								"{{applicationInformationId}}"
+							]
+						},
+						"description": "Get Third Party Applications by ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authorization",
+			"item": [
+				{
+					"name": "Get All Third-Party Authorizations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/atom+xml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/atom+xml"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CAT}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/resource/Authorization",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"resource",
+								"Authorization"
+							]
+						},
+						"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+					},
+					"response": []
+				},
+				{
+					"name": "Get Third-Party Authorization By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/atom+xml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/atom+xml"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CAT}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/resource/Authorization/{{authorizationId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"resource",
+								"Authorization",
+								"{{authorizationId}}"
+							]
+						},
+						"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+					},
+					"response": []
+				},
+				{
+					"name": "Read Service Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/atom+xml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/atom+xml"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CAT}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/resource/ReadServiceStatus",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"resource",
+								"ReadServiceStatus"
+							]
+						},
+						"description": "Get Third Party Authorization By ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data Exchange",
+			"item": [
+				{
+					"name": "Retail Customer",
+					"item": [
+						{
+							"name": "Get Customer Account In subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Customer/{{subscriptionId}}/CustomerAccount",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Customer",
+										"{{subscriptionId}}",
+										"CustomerAccount"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Customer Account By AccountId in subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Customer/{{subscriptionId}}/CustomerAccount/{{accountId}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Customer",
+										"{{subscriptionId}}",
+										"CustomerAccount",
+										"{{accountId}}"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Customer Agreement By AccountId in subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Customer/{{subscriptionId}}/CustomerAccount/{{accountId}}/CustomerAgreement",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Customer",
+										"{{subscriptionId}}",
+										"CustomerAccount",
+										"{{accountId}}",
+										"CustomerAgreement"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Customer Agreement By Customer Agreement Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Customer/{{subscriptionId}}/CustomerAccount/{{accountId}}/CustomerAgreement/{{customerAgreementId}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Customer",
+										"{{subscriptionId}}",
+										"CustomerAccount",
+										"{{accountId}}",
+										"CustomerAgreement",
+										"{{customerAgreementId}}"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Service Location by Customer Agreement id and account id subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Customer/{{subscriptionId}}/CustomerAccount/{{accountId}}/CustomerAgreement/{{customerAgreementId}}/ServiceLocation",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Customer",
+										"{{subscriptionId}}",
+										"CustomerAccount",
+										"{{accountId}}",
+										"CustomerAgreement",
+										"{{customerAgreementId}}",
+										"ServiceLocation"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Service location by Service Location Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Customer/{{subscriptionId}}/CustomerAccount/{{accountId}}/CustomerAgreement/{{customerAgreementId}}/ServiceLocation/{{serviceLocationId}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Customer",
+										"{{subscriptionId}}",
+										"CustomerAccount",
+										"{{accountId}}",
+										"CustomerAgreement",
+										"{{customerAgreementId}}",
+										"ServiceLocation",
+										"{{serviceLocationId}}"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Meters for service location in Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Customer/{{subscriptionId}}/CustomerAccount/{{accountId}}/CustomerAgreement/{{customerAgreementId}}/ServiceLocation/{{serviceLocationId}}/Meter",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Customer",
+										"{{subscriptionId}}",
+										"CustomerAccount",
+										"{{accountId}}",
+										"CustomerAgreement",
+										"{{customerAgreementId}}",
+										"ServiceLocation",
+										"{{serviceLocationId}}",
+										"Meter"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Meter By Serial Number Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Customer/{{subscriptionId}}/CustomerAccount/{{accountId}}/CustomerAgreement/{{customerAgreementId}}/ServiceLocation/{{serviceLocationId}}/Meter/{{serialNumber}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Customer",
+										"{{subscriptionId}}",
+										"CustomerAccount",
+										"{{accountId}}",
+										"CustomerAgreement",
+										"{{customerAgreementId}}",
+										"ServiceLocation",
+										"{{serviceLocationId}}",
+										"Meter",
+										"{{serialNumber}}"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Retail Customer Details using Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Customer/{{subscriptionId}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Customer",
+										"{{subscriptionId}}"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Retail customer batch",
+					"item": [
+						{
+							"name": "Get RetailCustomer in Batch",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Batch/RetailCustomer/{{subscriptionId}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Batch",
+										"RetailCustomer",
+										"{{subscriptionId}}"
+									]
+								},
+								"description": "Get All Usage Points"
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Customer data Data In Bulk",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{CAT}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Batch/Bulk/{{custbulkid}}?",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Batch",
+										"Bulk",
+										"{{custbulkid}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								},
+								"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Usage Point",
+					"item": [
+						{
+							"name": "Get All UsagePoints By Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Subscription/{{subscriptionId}}/UsagePoint",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Subscription",
+										"{{subscriptionId}}",
+										"UsagePoint"
+									]
+								},
+								"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+							},
+							"response": []
+						},
+						{
+							"name": "Get Usage Point by ID For Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Subscription",
+										"{{subscriptionId}}",
+										"UsagePoint",
+										"{{usagePointId}}"
+									]
+								},
+								"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Meter Reading",
+					"item": [
+						{
+							"name": "Get All Meter Readings For Usage Point In Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}/MeterReading",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Subscription",
+										"{{subscriptionId}}",
+										"UsagePoint",
+										"{{usagePointId}}",
+										"MeterReading"
+									]
+								},
+								"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+							},
+							"response": []
+						},
+						{
+							"name": "Get Meter Reading by ID For Usage Point In Subscription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}/MeterReading/{{meterReadingId}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Subscription",
+										"{{subscriptionId}}",
+										"UsagePoint",
+										"{{usagePointId}}",
+										"MeterReading",
+										"{{meterReadingId}}"
+									]
+								},
+								"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Local Time Parameter",
+					"item": [
+						{
+							"name": "Get All Local Time Parameters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/LocalTimeParameters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"LocalTimeParameters"
+									]
+								},
+								"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+							},
+							"response": []
+						},
+						{
+							"name": "Get Local Time Parameters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/LocalTimeParameters/{{localTimeParameterId}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"LocalTimeParameters",
+										"{{localTimeParameterId}}"
+									]
+								},
+								"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Historic Data",
+					"item": [
+						{
+							"name": "Interval Block",
+							"item": [
+								{
+									"name": "Get All Interval Blocks For Usage Point Meter Reading In Subscription",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}/MeterReading/{{meterReadingId}}/IntervalBlock?published-min={{published-min}}&published-max={{published-max}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"Subscription",
+												"{{subscriptionId}}",
+												"UsagePoint",
+												"{{usagePointId}}",
+												"MeterReading",
+												"{{meterReadingId}}",
+												"IntervalBlock"
+											],
+											"query": [
+												{
+													"key": "published-min",
+													"value": "{{published-min}}"
+												},
+												{
+													"key": "published-max",
+													"value": "{{published-max}}"
+												}
+											]
+										},
+										"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+									},
+									"response": []
+								},
+								{
+									"name": "Get Interval Block For Usage Point Meter Reading In Subscription",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}/MeterReading/{{meterReadingId}}/IntervalBlock/{{intervalBlockId}}?published-min={{published-min}}&published-max={{published-max}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"Subscription",
+												"{{subscriptionId}}",
+												"UsagePoint",
+												"{{usagePointId}}",
+												"MeterReading",
+												"{{meterReadingId}}",
+												"IntervalBlock",
+												"{{intervalBlockId}}"
+											],
+											"query": [
+												{
+													"key": "published-min",
+													"value": "{{published-min}}"
+												},
+												{
+													"key": "published-max",
+													"value": "{{published-max}}"
+												}
+											]
+										},
+										"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "ReadingType",
+							"item": [
+								{
+									"name": "Get All Reading Types",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/ReadingType",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"ReadingType"
+											]
+										},
+										"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+									},
+									"response": []
+								},
+								{
+									"name": "Get Reading Types",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/ReadingType/{{readingTypeId}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"ReadingType",
+												"{{readingTypeId}}"
+											]
+										},
+										"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Batch",
+							"item": [
+								{
+									"name": "Get All Usage Data In Batch",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{CAT}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/Batch/Bulk/{{bulkId}}?published-min={{published-min}}&published-max={{published-max}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"Batch",
+												"Bulk",
+												"{{bulkId}}"
+											],
+											"query": [
+												{
+													"key": "published-min",
+													"value": "{{published-min}}"
+												},
+												{
+													"key": "published-max",
+													"value": "{{published-max}}"
+												}
+											]
+										},
+										"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Usage Data By Subscription In Batch",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/Batch/Subscription/{{subscriptionId}}?published-min={{published-min}}&published-max={{published-max}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"Batch",
+												"Subscription",
+												"{{subscriptionId}}"
+											],
+											"query": [
+												{
+													"key": "published-min",
+													"value": "{{published-min}}"
+												},
+												{
+													"key": "published-max",
+													"value": "{{published-max}}"
+												}
+											]
+										},
+										"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+									},
+									"response": []
+								},
+								{
+									"name": "Get Usage Point By Subscription In Batch",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/Batch/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}?published-min={{published-min}}&published-max={{published-max}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"Batch",
+												"Subscription",
+												"{{subscriptionId}}",
+												"UsagePoint",
+												"{{usagePointId}}"
+											],
+											"query": [
+												{
+													"key": "published-min",
+													"value": "{{published-min}}"
+												},
+												{
+													"key": "published-max",
+													"value": "{{published-max}}"
+												}
+											]
+										},
+										"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Real Time",
+					"item": [
+						{
+							"name": "Reading Type(2)",
+							"item": [
+								{
+									"name": "Get All Real Time Reading Types",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/RealTime/ReadingType",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"RealTime",
+												"ReadingType"
+											]
+										},
+										"description": "Retrieve the 24 hrs. consumption Reading characteristics across meters associated with all the customers authorized in Share My Data DB"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Real Time Reading Type By ID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/RealTime/ReadingType/{{realTimeReadingTypeId}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"RealTime",
+												"ReadingType",
+												"{{realTimeReadingTypeId}}"
+											]
+										},
+										"description": "Retrieve the 24 hrs. consumption Reading characteristics associated with a specific  Interval "
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Interval Block",
+							"item": [
+								{
+									"name": "Get All Real Time Interval Blocks",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/RealTime/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}/MeterReading/{{realtimemeterReadingId}}/IntervalBlock",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"RealTime",
+												"Subscription",
+												"{{subscriptionId}}",
+												"UsagePoint",
+												"{{usagePointId}}",
+												"MeterReading",
+												"{{realtimemeterReadingId}}",
+												"IntervalBlock"
+											]
+										},
+										"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+									},
+									"response": []
+								},
+								{
+									"name": "Get Real Time Interval Block",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/RealTime/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}/MeterReading/{{realtimemeterReadingId}}/IntervalBlock/{{realtimeintervalBlockId}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"RealTime",
+												"Subscription",
+												"{{subscriptionId}}",
+												"UsagePoint",
+												"{{usagePointId}}",
+												"MeterReading",
+												"{{realtimemeterReadingId}}",
+												"IntervalBlock",
+												"{{realtimeintervalBlockId}}"
+											]
+										},
+										"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Batch(4)",
+							"item": [
+								{
+									"name": "Get All Real Time Usage Data In Batch",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{CAT}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/RealTime/Batch/Bulk/{{bulkId}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"RealTime",
+												"Batch",
+												"Bulk",
+												"{{bulkId}}"
+											]
+										},
+										"description": "Retrieve Asynchronously all available 24 hrs. consumption summary of all the Share My Data customers authorized with the requested Third-Party"
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Real Time Usage Data For Subscription In Batch",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/RealTime/Batch/Subscription/{{subscriptionId}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"RealTime",
+												"Batch",
+												"Subscription",
+												"{{subscriptionId}}"
+											]
+										},
+										"description": "Retrieve Asynchronously all available 24 hrs. consumption summary of the specific Share My Data customer authorized with the requested Third-Party"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Real Time Usage Point By Subscription In Batch",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(202);});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/atom+xml",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/atom+xml",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/resource/RealTime/Batch/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"resource",
+												"RealTime",
+												"Batch",
+												"Subscription",
+												"{{subscriptionId}}",
+												"UsagePoint",
+												"{{usagePointId}}"
+											]
+										},
+										"description": "Retrieve Asynchronously all available 24 hrs. consumption summary of the  Share My Data customer associated with the requested Service Point"
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Billing Summary",
+					"item": [
+						{
+							"name": "Get All Billing Information",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}/UsageSummary?published-min={{published-min}}&published-max={{published-max}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Subscription",
+										"{{subscriptionId}}",
+										"UsagePoint",
+										"{{usagePointId}}",
+										"UsageSummary"
+									],
+									"query": [
+										{
+											"key": "published-min",
+											"value": "{{published-min}}"
+										},
+										{
+											"key": "published-max",
+											"value": "{{published-max}}"
+										}
+									]
+								},
+								"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+							},
+							"response": []
+						},
+						{
+							"name": "Get Billing Information",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {pm.response.to.have.status(200);});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Accept",
+										"value": "application/atom+xml"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/resource/Subscription/{{subscriptionId}}/UsagePoint/{{usagePointId}}/UsageSummary/{{usageSummaryId}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"resource",
+										"Subscription",
+										"{{subscriptionId}}",
+										"UsagePoint",
+										"{{usagePointId}}",
+										"UsageSummary",
+										"{{usageSummaryId}}"
+									]
+								},
+								"description": "Retrieve Billing Information across all Billing periods for the Service Agreement ID (E/G) associated with the requested Service Point "
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
