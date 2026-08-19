@@ -73,7 +73,7 @@ tags:
 - Demand Response
 created: '2026-07-27'
 modified: '2026-07-27'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: con-edison:con-edison-green-button-connect-my-data-api
   name: Con Edison Green Button Connect My Data API
