@@ -220,3 +220,9 @@ notes:
 - The token tool is an OAuth mechanism rather than a data tool and would normally live in the server transport
   layer, not the tool list.
 - Real-time tools return provisional, non-billing-quality electric data for the last 24 hours only.
+deployment:
+  mode: none
+  verified: derived
+  tools: 37
+  checked: '2026-08-12'
+  source: catalog MCP census

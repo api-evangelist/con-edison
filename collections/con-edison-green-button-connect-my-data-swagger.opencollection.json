@@ -1,0 +1,1097 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DCX GBC API V2",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ApplicationInformation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getThirdPartyApplicationById",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/ApplicationInformation/:applicationInformationId",
+            "params": [
+              {
+                "name": "applicationInformationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Authorization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all Third Party Authorizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Authorization",
+            "params": [
+              {
+                "name": "publishedMax",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "publishedMin",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updatedMax",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updatedMin",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Get Third Party Authorization by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Authorization/:authorizationId",
+            "params": [
+              {
+                "name": "authorizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "publishedMax",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "publishedMin",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updatedMax",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updatedMin",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth/Token"
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ServiceStatus",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "readServiceStatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/ReadServiceStatus"
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Batch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAllUsageDataInBatch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Batch/Bulk/:bulkId",
+            "params": [
+              {
+                "name": "bulkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "published-min",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published-max",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getAllUsageDataForSubscriptionInBatch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Batch/Subscription/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "published-min",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published-max",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getUsagePointBySubscriptionInBatch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Batch/Subscription/:subscriptionId/UsagePoint/:usagePointId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "published-min",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published-max",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getCustomerInformationInBatch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Batch/RetailCustomer/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "IntervalBlock",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAllIntervalBlocksForUsagePointMeterReadingInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Subscription/:subscriptionId/UsagePoint/:usagePointId/MeterReading/:meterReadingId/IntervalBlock",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "meterReadingId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "published-min",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published-max",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getIntervalBlocksForUsagePointMeterReadingInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Subscription/:subscriptionId/UsagePoint/:usagePointId/MeterReading/:meterReadingId/IntervalBlock/:intervalBlockId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "meterReadingId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "intervalBlockId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "published-min",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published-max",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "LocalTimeParameters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getLocalTimeParameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/LocalTimeParameters",
+            "params": [
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getLocalTimeParametersById",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/LocalTimeParameters/:localTimeParameterId",
+            "params": [
+              {
+                "name": "localTimeParameterId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "MeterReading",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAllMeterReadingsForUsagePointInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Subscription/:subscriptionId/UsagePoint/:usagePointId/MeterReading",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getMeterReadingForUsagePointInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Subscription/:subscriptionId/UsagePoint/:usagePointId/MeterReading/:meterReadingId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "meterReadingId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ReadingType",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAllReadingTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/ReadingType",
+            "params": [
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getReadingTypesById",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/ReadingType/:readingTypeId",
+            "params": [
+              {
+                "name": "readingTypeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RealTimeBatch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAllRealTimeUsageDataInBatch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/RealTime/Batch/Bulk/:bulkId",
+            "params": [
+              {
+                "name": "bulkId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "published-min",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published-max",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getAllRealTimeUsageDataForSubscriptionInBatch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/RealTime/Batch/Subscription/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "published-min",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published-max",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getRealTimeUsagePointBySubscriptionInBatch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/RealTime/Batch/Subscription/:subscriptionId/UsagePoint/:usagePointId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "published-min",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published-max",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RealTimeIntervalBlock",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAllRealTimeIntervalBlocksForUsagePointMeterReadingInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/RealTime/Subscription/:subscriptionId/UsagePoint/:usagePointId/MeterReading/:meterReadingId/IntervalBlock",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "meterReadingId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getRealTimeIntervalBlockForUsagePointMeterReadingInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/RealTime/Subscription/:subscriptionId/UsagePoint/:usagePointId/MeterReading/:meterReadingId/IntervalBlock/:intervalBlockId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "meterReadingId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "intervalBlockId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RealTimeReadingType",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAllRealTimeReadingTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/RealTime/ReadingType",
+            "params": [
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getRealTimeReadingTypeById",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/RealTime/ReadingType/:readingTypeId",
+            "params": [
+              {
+                "name": "readingTypeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "RetailCustomer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getCustomerInformationBySubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Customer/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getCustomerAccountInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Customer/:subscriptionId/CustomerAccount",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getCustomerAccountByAccountIdInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Customer/:subscriptionId/CustomerAccount/:accountId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getCustomerAgreementByAccountIdInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Customer/:subscriptionId/CustomerAccount/:accountId/CustomerAgreement",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getCustomerAgreementByCustomerAgreementId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Customer/:subscriptionId/CustomerAccount/:accountId/CustomerAgreement/:customerAgreementId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "customerAgreementId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getAllServiceLocationByCustomerAgreementIdAndAccountIdInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Customer/:subscriptionId/CustomerAccount/:accountId/CustomerAgreement/:customerAgreementId/ServiceLocation",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "customerAgreementId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getServiceLocationByServiceLocationId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Customer/:subscriptionId/CustomerAccount/:accountId/CustomerAgreement/:customerAgreementId/ServiceLocation/:serviceLocationId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "customerAgreementId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "serviceLocationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getAllMetersForServiceLocationInSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Customer/:subscriptionId/CustomerAccount/:accountId/CustomerAgreement/:customerAgreementId/ServiceLocation/:serviceLocationId/Meter",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "customerAgreementId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "serviceLocationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getMeterBySerialNumberId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Customer/:subscriptionId/CustomerAccount/:accountId/CustomerAgreement/:customerAgreementId/ServiceLocation/:serviceLocationId/Meter/:serialNumber",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "customerAgreementId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "serviceLocationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "serialNumber",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ElectricPowerUsageSummary",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAllElectricPowerUsageSummaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Subscription/:subscriptionId/UsagePoint/:usagePointId/UsageSummary",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "published-min",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "published-max",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getAllElectricPowerUsageSummariesById",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/resource/Subscription/:subscriptionId/UsagePoint/:usagePointId/UsageSummary/:usageSummaryId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usageSummaryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "UsagePoint",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAllUsagePointsBySubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Subscription/:subscriptionId/UsagePoint",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getUsagePointsForSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/resource/Subscription/:subscriptionId/UsagePoint/:usagePointId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "usagePointId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
