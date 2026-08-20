@@ -108,6 +108,14 @@ apis:
   - Energy Usage
   - Billing
   - Smart Metering
+  - Authentication
+  tags_raw:
+  - Green Button
+  - Connect My Data
+  - ESPI
+  - Energy Usage
+  - Billing
+  - Smart Metering
   - OAuth 2.0
   properties:
   - type: OpenAPI
