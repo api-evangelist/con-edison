@@ -81,126 +81,19 @@ created: '2026-07-27'
 modified: '2026-07-27'
 specificationVersion: '0.23'
 apis:
-- aid: con-edison:con-edison-green-button-connect-my-data-api
-  name: Con Edison Green Button Connect My Data API
-  description: >-
-    Con Edison and Orange & Rockland's Green Button Connect My Data (CMD)
-    implementation, branded "Share My Data" — the NAESB REQ.21 Energy Services
-    Provider Interface (ESPI) machine-to-machine API through which a customer-
-    authorized third party retrieves that customer's electric and gas interval
-    usage, usage summaries, billing information and retail customer records in
-    Atom/ESPI XML. The published Swagger 2.0 definition ("DCX GBC API V2",
-    basePath /gbc/espi/1_1) documents 37 paths across ApplicationInformation,
-    Authorization, ReadServiceStatus, UsagePoint, MeterReading, IntervalBlock,
-    ReadingType, LocalTimeParameters, UsageSummary, RetailCustomer, Batch and
-    RealTime resources. Authorization is OAuth 2.0 (RFC 6749/6750): the
-    customer consents on the Con Edison or ORU site, the third party exchanges
-    the authorization code at the token endpoint, and access tokens live one
-    hour. Scopes are ESPI functional blocks (FB=1_3_4_5_7_8_10_15_16_51_53_56_
-    57_58_60 with IntervalDuration, BlockDuration and HistoryLength
-    qualifiers). Up to two years of history; 5-minute intervals for commercial
-    AMI electric, 15-minute for residential AMI electric, 1-hour for gas AMI,
-    monthly for non-interval meters; real-time electric readings for the last
-    24 hours at 45-minute latency. Access is NOT self-serve — registration, a
-    signed Data Security Agreement, a technical onboarding form and supervised
-    test-environment certification are required before production credentials
-    are issued.
-  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
-  baseURL: https://api.coned.com/gbc/espi/1_1
-  tags:
-  - Green Button
-  - Connect My Data
-  - ESPI
-  - Energy Usage
-  - Billing
-  - Smart Metering
-  - Authentication
-  tags_raw:
-  - Green Button
-  - Connect My Data
-  - ESPI
-  - Energy Usage
-  - Billing
-  - Smart Metering
-  - OAuth 2.0
-  properties:
-  - type: OpenAPI
-    url: openapi/con-edison-green-button-connect-my-data-swagger.json
-  - type: Overlay
-    url: overlays/con-edison-green-button-connect-my-data-overlay.yaml
-    name: API Evangelist enhancements — real host, documented OAuth 2.0 schemes, async batch semantics
-  - type: PostmanCollection
-    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
-  - type: PostmanEnvironment
-    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
-  - type: Authentication
-    url: authentication/con-edison-authentication.yml
-    name: OAuth 2.0 authorization_code, refresh_token and client_credentials profile
-  - type: OAuthScopes
-    url: scopes/con-edison-scopes.yml
-    name: ESPI functional-block scopes (FB=1,3,4,5,7,8,10,15,16,35,51,53,56,57,58,60,67)
-  - type: Conventions
-    url: conventions/con-edison-conventions.yml
-  - type: ErrorCatalog
-    url: errors/con-edison-problem-types.yml
-  - type: RateLimits
-    url: rate-limits/con-edison-rate-limits.yml
-    name: 50 token-endpoint calls per minute; no limit on resource endpoints
-  - type: Lifecycle
-    url: lifecycle/con-edison-lifecycle.yml
-  - type: Conformance
-    url: conformance/con-edison-conformance.yml
-    name: NAESB REQ.21 ESPI 1.1, Green Button CMD V3.3, RFC 6749/6750
-  - type: DataModel
-    url: data-model/con-edison-data-model.yml
-  - type: Webhooks
-    url: asyncapi/con-edison-batch-notification-webhooks.yml
-    name: Batch completion notification POSTed to the third party's ThirdPartyNotifyUri
-  - type: Sandbox
-    url: sandbox/con-edison-sandbox.yml
-    name: Supervised test environment — apit.coned.com and uat10.coned.com
-  - type: MCPServer
-    url: mcp/con-edison-mcp.yml
-    name: Candidate MCP tool list derived from the published Swagger definition (no server exists)
-  - type: AgentSkill
-    url: skills/_index.yml
-  - type: GettingStarted
-    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
-  - type: Documentation
-    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
-  - type: Documentation
-    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
-  - type: FAQ
-    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
-  - type: SignUp
-    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
-  - type: Documentation
-    url: https://www.coned.com/en/business-partners/access-customer-data
-  - type: Documentation
-    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
-  - type: Documentation
-    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
-  - type: Standard
-    url: https://www.naesb.org/espi_standards.asp
-  - type: Standard
-    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
 - aid: con-edison:con-edison-hosting-capacity-map-rest-api
   name: Con Edison Hosting Capacity Map REST API
   description: >-
-    Con Edison's distribution-grid open data, published as anonymously readable
-    Esri ArcGIS REST feature services behind the public Hosting Capacity Map.
-    Con Edison's own documentation states that "REST API access allows users to
-    overlay the Con Edison Hosting Capacity Map data with their own GIS systems
-    and mapping tools" and that the endpoints are exposed on the map's "Rest
-    API" tab. The services cover CECONY and Orange & Rockland segmented and
-    network hosting capacity for distributed generation, EV load-serving
-    transformer capacity, 33kV feeders, non-wires-solutions impacted networks,
-    Locational System Relief Value eligibility, disadvantaged and overburdened
-    communities, and the IEDR-facing hosting capacity layers. No login, API
-    key, or agreement is required; every service probed returned HTTP 200
-    unauthenticated. Con Edison states the data "is being provided for
-    informational purposes only and is not intended to be a substitute for the
-    established interconnection application process."
+    Con Edison's distribution-grid open data, published as anonymously readable Esri ArcGIS REST feature
+    services behind the public Hosting Capacity Map. Con Edison's own documentation states that "REST
+    API access allows users to overlay the Con Edison Hosting Capacity Map data with their own GIS systems
+    and mapping tools" and that the endpoints are exposed on the map's "Rest API" tab. The services cover
+    CECONY and Orange & Rockland segmented and network hosting capacity for distributed generation, EV
+    load-serving transformer capacity, 33kV feeders, non-wires-solutions impacted networks, Locational
+    System Relief Value eligibility, disadvantaged and overburdened communities, and the IEDR-facing hosting
+    capacity layers. No login, API key, or agreement is required; every service probed returned HTTP 200
+    unauthenticated. Con Edison states the data "is being provided for informational purposes only and
+    is not intended to be a substitute for the established interconnection application process."
   humanURL: https://www.coned.com/en/business-partners/hosting-capacity
   baseURL: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services
   tags:
@@ -226,16 +119,840 @@ apis:
   - type: Application
     url: https://experience.arcgis.com/experience/d9d758c7736b44909dc3781937ca2ed5
   - type: APIReference
-    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_NodalHCV_Prod/FeatureServer
+    url: >-
+      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_NodalHCV_Prod/FeatureServer
   - type: APIReference
-    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_EVM_Prod/FeatureServer
+    url: >-
+      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_EVM_Prod/FeatureServer
   - type: APIReference
-    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CE_NWS_Networks_Prod/FeatureServer
+    url: >-
+      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CE_NWS_Networks_Prod/FeatureServer
   - type: APIReference
-    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_33Kv_Prod/FeatureServer
+    url: >-
+      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_33Kv_Prod/FeatureServer
   - type: APIReference
-    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/IEDR_CECONY/FeatureServer
+    url: >-
+      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/IEDR_CECONY/FeatureServer
+- aid: con-edison:con-edison-applicationinformation-api
+  name: Con Edison Application Information API
+  description: >-
+    The ApplicationInformation API from Con Edison — 1 operation(s) for applicationinformation.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - ApplicationInformation
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-applicationinformation-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-authorization-api
+  name: Con Edison Authorization API
+  description: The Authorization API from Con Edison — 3 operation(s) for authorization.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - Authorization
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-authorization-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-batch-api
+  name: Con Edison Batch API
+  description: The Batch API from Con Edison — 4 operation(s) for batch.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - Batch
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-batch-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-electricpowerusagesummary-api
+  name: Con Edison Electric Power Usage Summary API
+  description: >-
+    The ElectricPowerUsageSummary API from Con Edison — 2 operation(s) for electricpowerusagesummary.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - ElectricPowerUsageSummary
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-electricpowerusagesummary-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-intervalblock-api
+  name: Con Edison Interval Block API
+  description: The IntervalBlock API from Con Edison — 2 operation(s) for intervalblock.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - IntervalBlock
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-intervalblock-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-localtimeparameters-api
+  name: Con Edison Local Time Parameters API
+  description: The LocalTimeParameters API from Con Edison — 2 operation(s) for localtimeparameters.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - LocalTimeParameters
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-localtimeparameters-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-meterreading-api
+  name: Con Edison Meter Reading API
+  description: The MeterReading API from Con Edison — 2 operation(s) for meterreading.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - MeterReading
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-meterreading-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-readingtype-api
+  name: Con Edison Reading Type API
+  description: The ReadingType API from Con Edison — 2 operation(s) for readingtype.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - ReadingType
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-readingtype-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-realtimebatch-api
+  name: Con Edison Real Time Batch API
+  description: The RealTimeBatch API from Con Edison — 3 operation(s) for realtimebatch.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - RealTimeBatch
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-realtimebatch-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-realtimeintervalblock-api
+  name: Con Edison Real Time Interval Block API
+  description: >-
+    The RealTimeIntervalBlock API from Con Edison — 2 operation(s) for realtimeintervalblock.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - RealTimeIntervalBlock
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-realtimeintervalblock-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-realtimereadingtype-api
+  name: Con Edison Real Time Reading Type API
+  description: The RealTimeReadingType API from Con Edison — 2 operation(s) for realtimereadingtype.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - RealTimeReadingType
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-realtimereadingtype-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-retailcustomer-api
+  name: Con Edison Retail Customer API
+  description: The RetailCustomer API from Con Edison — 9 operation(s) for retailcustomer.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - RetailCustomer
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-retailcustomer-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-servicestatus-api
+  name: Con Edison Service Status API
+  description: The ServiceStatus API from Con Edison — 1 operation(s) for servicestatus.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - ServiceStatus
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-servicestatus-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+- aid: con-edison:con-edison-usagepoint-api
+  name: Con Edison Usage Point API
+  description: The UsagePoint API from Con Edison — 2 operation(s) for usagepoint.
+  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  baseURL: https://api.coned.com/gbc/espi/1_1
+  tags:
+  - UsagePoint
+  properties:
+  - type: OpenAPI
+    url: openapi/con-edison-usagepoint-api-openapi.yml
+  - type: PostmanCollection
+    url: collections/con-edison-green-button-connect-my-data.postman_collection.json
+  - type: PostmanEnvironment
+    url: collections/con-edison-green-button-connect-my-data.postman_environment.json
+  - type: Authentication
+    url: authentication/con-edison-authentication.yml
+  - type: OAuthScopes
+    url: scopes/con-edison-scopes.yml
+  - type: Conventions
+    url: conventions/con-edison-conventions.yml
+  - type: ErrorCatalog
+    url: errors/con-edison-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/con-edison-rate-limits.yml
+  - type: Lifecycle
+    url: lifecycle/con-edison-lifecycle.yml
+  - type: Conformance
+    url: conformance/con-edison-conformance.yml
+  - type: DataModel
+    url: data-model/con-edison-data-model.yml
+  - type: Webhooks
+    url: asyncapi/con-edison-batch-notification-webhooks.yml
+  - type: Sandbox
+    url: sandbox/con-edison-sandbox.yml
+  - type: GettingStarted
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  - type: Documentation
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+  - type: FAQ
+    url: >-
+      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+  - type: SignUp
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+  - type: Documentation
+    url: https://www.coned.com/en/business-partners/access-customer-data
+  - type: Documentation
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
+  - type: Documentation
+    url: >-
+      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+  - type: Standard
+    url: https://www.naesb.org/espi_standards.asp
+  - type: Standard
+    url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
 common:
+- type: Overlay
+  url: overlays/con-edison-green-button-connect-my-data-overlay.yaml
+- type: MCPServer
+  url: mcp/con-edison-mcp.yml
 - type: AgenticAccess
   url: agentic-access/con-edison-agentic-access.yml
 - type: DomainSecurity
