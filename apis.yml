@@ -39,6 +39,18 @@ description: >-
   non-wires-solutions networks and disadvantaged communities all answer
   unauthenticated. Open on the grid, accredited on the customer — that split is
   the finding.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: application-approval
