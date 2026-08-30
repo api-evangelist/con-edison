@@ -850,6 +850,8 @@ apis:
   humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   baseURL: https://api.coned.com/gbc/espi/1_1
   tags:
+  - Service Status
+  tags_raw:
   - ServiceStatus
   properties:
   - type: OpenAPI
