@@ -1,0 +1,270 @@
+openapi: 3.2.0
+info:
+  version: v1
+  title: DCX GBC API V2 Retail Customer API
+  description: 'The Green Button Connect API provides an access to RESTful services provided by ConEdison and Third Party Applications. These APIs allow application developers full access, in Green Button Format, to Energy Usage Information for the purpose of developing new Green Button Applications.Access to Green Button APIs requires an OAuth2 Access Token. Insert Access Tokens in the field labelled ''Access Token: '' at the top of the page prior to selecting the ''Try It Out!'' button:'
+servers:
+- url: https://provided-by-coned/gbc/espi/1_1
+tags:
+- name: RetailCustomer
+paths:
+  /resource/Customer/{subscriptionId}:
+    get:
+      tags:
+      - RetailCustomer
+      operationId: getCustomerInformationBySubscription
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+      servers:
+      - url: https://provided-by-coned/gbc/espi/1_1
+  /resource/Customer/{subscriptionId}/CustomerAccount:
+    get:
+      tags:
+      - RetailCustomer
+      operationId: getCustomerAccountInSubscription
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+      servers:
+      - url: https://provided-by-coned/gbc/espi/1_1
+  /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}:
+    get:
+      tags:
+      - RetailCustomer
+      operationId: getCustomerAccountByAccountIdInSubscription
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+      servers:
+      - url: https://provided-by-coned/gbc/espi/1_1
+  /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement:
+    get:
+      tags:
+      - RetailCustomer
+      operationId: getCustomerAgreementByAccountIdInSubscription
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+      servers:
+      - url: https://provided-by-coned/gbc/espi/1_1
+  /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}:
+    get:
+      tags:
+      - RetailCustomer
+      operationId: getCustomerAgreementByCustomerAgreementId
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: customerAgreementId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+      servers:
+      - url: https://provided-by-coned/gbc/espi/1_1
+  /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation:
+    get:
+      tags:
+      - RetailCustomer
+      operationId: getAllServiceLocationByCustomerAgreementIdAndAccountIdInSubscription
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: customerAgreementId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+      servers:
+      - url: https://provided-by-coned/gbc/espi/1_1
+  ? /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation/{serviceLocationId}
+  : get:
+      tags:
+      - RetailCustomer
+      operationId: getServiceLocationByServiceLocationId
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: customerAgreementId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: serviceLocationId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+      servers:
+      - url: https://provided-by-coned/gbc/espi/1_1
+  ? /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation/{serviceLocationId}/Meter
+  : get:
+      tags:
+      - RetailCustomer
+      operationId: getAllMetersForServiceLocationInSubscription
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: customerAgreementId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: serviceLocationId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+      servers:
+      - url: https://provided-by-coned/gbc/espi/1_1
+  ? /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation/{serviceLocationId}/Meter/{serialNumber}
+  : get:
+      tags:
+      - RetailCustomer
+      operationId: getMeterBySerialNumberId
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: customerAgreementId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: serviceLocationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: serialNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+      servers:
+      - url: https://provided-by-coned/gbc/espi/1_1
