@@ -844,18 +844,16 @@ apis:
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
     url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
-- aid: con-edison:con-edison-servicestatus-api
-  name: Con Edison Service Status API
-  description: The ServiceStatus API from Con Edison — 1 operation(s) for servicestatus.
+- aid: con-edison:con-edison-usagepoint-api
+  name: Con Edison Usage Point API
+  description: The UsagePoint API from Con Edison — 2 operation(s) for usagepoint.
   humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   baseURL: https://api.coned.com/gbc/espi/1_1
   tags:
-  - Service Status
-  tags_raw:
-  - ServiceStatus
+  - UsagePoint
   properties:
   - type: OpenAPI
-    url: openapi/con-edison-servicestatus-api-openapi.yml
+    url: openapi/con-edison-usagepoint-api-openapi.yml
   - type: PostmanCollection
     url: collections/con-edison-green-button-connect-my-data.postman_collection.json
   - type: PostmanEnvironment
@@ -904,16 +902,16 @@ apis:
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
     url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
-- aid: con-edison:con-edison-usagepoint-api
-  name: Con Edison Usage Point API
-  description: The UsagePoint API from Con Edison — 2 operation(s) for usagepoint.
-  humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
-  baseURL: https://api.coned.com/gbc/espi/1_1
+- aid: con-edison:con-edison-service-status-api
+  name: Con Edison Service Status API
+  description: The Service Status API from Con Edison — 1 operation(s) for service status.
+  humanURL: https://www.coned.com/en/business-partners/hosting-capacity
+  baseURL: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services
   tags:
-  - UsagePoint
+  - Service Status
   properties:
   - type: OpenAPI
-    url: openapi/con-edison-usagepoint-api-openapi.yml
+    url: openapi/con-edison-service-status-api-openapi.yml
   - type: PostmanCollection
     url: collections/con-edison-green-button-connect-my-data.postman_collection.json
   - type: PostmanEnvironment
