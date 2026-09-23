@@ -39,6 +39,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all meter readings for usage point in subscription
+      x-summary-source: derived
   /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/MeterReading/{meterReadingId}:
     get:
       tags:
@@ -75,3 +77,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get meter reading for usage point in subscription
+      x-summary-source: derived

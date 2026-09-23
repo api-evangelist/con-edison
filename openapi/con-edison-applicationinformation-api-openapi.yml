@@ -28,3 +28,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get third party application by id
+      x-summary-source: derived

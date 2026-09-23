@@ -40,6 +40,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all usage data in batch
+      x-summary-source: derived
   /resource/Batch/Subscription/{subscriptionId}:
     get:
       tags:
@@ -72,6 +74,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all usage data for subscription in batch
+      x-summary-source: derived
   /resource/Batch/Subscription/{subscriptionId}/UsagePoint/{usagePointId}:
     get:
       tags:
@@ -109,6 +113,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get usage point by subscription in batch
+      x-summary-source: derived
   /resource/Batch/RetailCustomer/{subscriptionId}:
     get:
       tags:
@@ -129,3 +135,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get customer information in batch
+      x-summary-source: derived

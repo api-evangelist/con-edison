@@ -47,6 +47,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all third party authorizations
+      x-summary-source: derived
   /resource/Authorization/{authorizationId}:
     get:
       tags:
@@ -91,6 +93,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get third party authorization by ID
+      x-summary-source: derived
   /oauth/Token:
     post:
       tags:
@@ -124,6 +128,8 @@ paths:
             schema:
               $ref: '#/components/schemas/TokenRequest'
         required: true
+      summary: Token
+      x-summary-source: derived
 components:
   schemas:
     TokenRequest:

@@ -29,6 +29,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all real time reading types
+      x-summary-source: derived
   /resource/RealTime/ReadingType/{readingTypeId}:
     get:
       tags:
@@ -55,3 +57,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get real time reading type by id
+      x-summary-source: derived

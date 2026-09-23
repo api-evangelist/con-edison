@@ -44,6 +44,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all real time interval blocks for usage point meter reading in subscription
+      x-summary-source: derived
   ? /resource/RealTime/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/MeterReading/{meterReadingId}/IntervalBlock/{intervalBlockId}
   : get:
       tags:
@@ -85,3 +87,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get real time interval block for usage point meter reading in subscription
+      x-summary-source: derived

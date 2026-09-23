@@ -29,6 +29,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get local time parameters
+      x-summary-source: derived
   /resource/LocalTimeParameters/{localTimeParameterId}:
     get:
       tags:
@@ -55,3 +57,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get local time parameters by id
+      x-summary-source: derived

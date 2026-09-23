@@ -1,0 +1,63 @@
+{
+  "provider": "con-edison",
+  "sources": [
+    "_original/con-edison-green-button-connect-my-data-swagger.json"
+  ],
+  "outputs": [
+    "con-edison-applicationinformation-api-openapi.yml",
+    "con-edison-authorization-api-openapi.yml",
+    "con-edison-batch-api-openapi.yml",
+    "con-edison-electricpowerusagesummary-api-openapi.yml",
+    "con-edison-intervalblock-api-openapi.yml",
+    "con-edison-localtimeparameters-api-openapi.yml",
+    "con-edison-meterreading-api-openapi.yml",
+    "con-edison-readingtype-api-openapi.yml",
+    "con-edison-realtimebatch-api-openapi.yml",
+    "con-edison-realtimeintervalblock-api-openapi.yml",
+    "con-edison-realtimereadingtype-api-openapi.yml",
+    "con-edison-retailcustomer-api-openapi.yml",
+    "con-edison-servicestatus-api-openapi.yml",
+    "con-edison-usagepoint-api-openapi.yml"
+  ],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "con-edison-green-button-connect-my-data-swagger.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: ApplicationInformation",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: Authorization",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: Batch",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: ElectricPowerUsageSummary",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: IntervalBlock",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: LocalTimeParameters",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: MeterReading",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: ReadingType",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: RealTimeBatch",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: RealTimeIntervalBlock",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: RealTimeReadingType",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: RetailCustomer",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: ServiceStatus",
+    "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: UsagePoint",
+    "superseded outputs removed: con-edison-service-status-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 15 total)"
+  ],
+  "skipped": [
+    "con-edison-applicationinformation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-authorization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-batch-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-electricpowerusagesummary-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-intervalblock-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-localtimeparameters-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-meterreading-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-readingtype-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-realtimebatch-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-realtimeintervalblock-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-realtimereadingtype-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-retailcustomer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-service-status-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "con-edison-usagepoint-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

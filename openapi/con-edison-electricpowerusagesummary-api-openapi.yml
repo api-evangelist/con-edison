@@ -51,6 +51,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all electric power usage summaries
+      x-summary-source: derived
   /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}/UsageSummary/{usageSummaryId}:
     post:
       tags:
@@ -81,3 +83,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all electric power usage summaries by id
+      x-summary-source: derived

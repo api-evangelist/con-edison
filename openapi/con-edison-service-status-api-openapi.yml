@@ -6,12 +6,12 @@ info:
 servers:
 - url: https://provided-by-coned/gbc/espi/1_1
 tags:
-- name: ServiceStatus
+- name: Service Status
 paths:
   /resource/ReadServiceStatus:
     get:
       tags:
-      - ServiceStatus
+      - Service Status
       operationId: readServiceStatus
       responses:
         '200':
@@ -22,3 +22,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Read service status
+      x-summary-source: derived

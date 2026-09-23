@@ -34,6 +34,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all usage points by subscription
+      x-summary-source: derived
   /resource/Subscription/{subscriptionId}/UsagePoint/{usagePointId}:
     get:
       tags:
@@ -65,3 +67,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get usage points for subscription
+      x-summary-source: derived

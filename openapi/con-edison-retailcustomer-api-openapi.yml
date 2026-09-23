@@ -28,6 +28,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get customer information by subscription
+      x-summary-source: derived
   /resource/Customer/{subscriptionId}/CustomerAccount:
     get:
       tags:
@@ -48,6 +50,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get customer account in subscription
+      x-summary-source: derived
   /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}:
     get:
       tags:
@@ -73,6 +77,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get customer account by account id in subscription
+      x-summary-source: derived
   /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement:
     get:
       tags:
@@ -98,6 +104,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get customer agreement by account id in subscription
+      x-summary-source: derived
   /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}:
     get:
       tags:
@@ -128,6 +136,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get customer agreement by customer agreement id
+      x-summary-source: derived
   /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation:
     get:
       tags:
@@ -158,6 +168,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all service location by customer agreement id and account id in subscription
+      x-summary-source: derived
   ? /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation/{serviceLocationId}
   : get:
       tags:
@@ -193,6 +205,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get service location by service location id
+      x-summary-source: derived
   ? /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation/{serviceLocationId}/Meter
   : get:
       tags:
@@ -228,6 +242,8 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get all meters for service location in subscription
+      x-summary-source: derived
   ? /resource/Customer/{subscriptionId}/CustomerAccount/{accountId}/CustomerAgreement/{customerAgreementId}/ServiceLocation/{serviceLocationId}/Meter/{serialNumber}
   : get:
       tags:
@@ -268,3 +284,5 @@ paths:
           description: Unauthorized
       servers:
       - url: https://provided-by-coned/gbc/espi/1_1
+      summary: Get meter by serial number id
+      x-summary-source: derived
