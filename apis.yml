@@ -90,7 +90,7 @@ tags:
 - EV Charging
 - Demand Response
 created: '2026-07-27'
-modified: '2026-07-27'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: con-edison:con-edison-hosting-capacity-map-rest-api
@@ -961,6 +961,8 @@ apis:
   - type: Standard
     url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
 common:
+- url: https://www.coned.com/en/about-us/media-center/news
+  type: Blog
 - type: Overlay
   url: overlays/con-edison-green-button-connect-my-data-overlay.yaml
 - type: X-MCPServerCandidate
