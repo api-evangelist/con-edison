@@ -961,6 +961,8 @@ apis:
   - type: Standard
     url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
 common:
+- type: RateLimits
+  url: rate-limits/con-edison-rate-limits.yml
 - url: https://www.coned.com/en/about-us/media-center/news
   type: Blog
 - type: Overlay
