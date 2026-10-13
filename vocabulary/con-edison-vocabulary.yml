@@ -1,0 +1,20 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/con-edison-applicationinformation-api-openapi.yml
+- openapi/con-edison-authorization-api-openapi.yml
+- openapi/con-edison-batch-api-openapi.yml
+- openapi/con-edison-electricpowerusagesummary-api-openapi.yml
+- openapi/con-edison-intervalblock-api-openapi.yml
+vocabulary:
+  name: Con Edison Domain Vocabulary
+  description: 'Terms declared by Con Edison''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-13'
+  terms:
+  - term: TokenRequest
+    definition: 'Object declared by the contract with fields: clientId, clientSecret, redirect_uri, scope, code, grant_type, refresh_token.'
+    tags:
+    - Object
+    source: openapi/con-edison-authorization-api-openapi.yml#/components/schemas/TokenRequest

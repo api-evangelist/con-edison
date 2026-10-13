@@ -1,0 +1,49 @@
+{
+  "@context": {
+    "@vocab": "https://coned.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "con": "https://coned.com/schema#",
+    "TokenRequest": "con:TokenRequest",
+    "clientId": {
+      "@id": "con:clientId",
+      "@type": "xsd:string"
+    },
+    "clientSecret": {
+      "@id": "con:clientSecret",
+      "@type": "xsd:string"
+    },
+    "redirect_uri": {
+      "@id": "con:redirect_uri",
+      "@type": "xsd:string"
+    },
+    "scope": {
+      "@id": "con:scope",
+      "@type": "xsd:string"
+    },
+    "code": {
+      "@id": "con:code",
+      "@type": "xsd:string"
+    },
+    "grant_type": {
+      "@id": "con:grant_type",
+      "@type": "xsd:string"
+    },
+    "refresh_token": {
+      "@id": "con:refresh_token",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Con Edison API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Con Edison's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-13) from openapi/con-edison-applicationinformation-api-openapi.yml, openapi/con-edison-authorization-api-openapi.yml, openapi/con-edison-batch-api-openapi.yml.",
+  "dcterms:created": "2026-10-13",
+  "dcterms:source": [
+    "openapi/con-edison-applicationinformation-api-openapi.yml",
+    "openapi/con-edison-authorization-api-openapi.yml",
+    "openapi/con-edison-batch-api-openapi.yml",
+    "openapi/con-edison-electricpowerusagesummary-api-openapi.yml",
+    "openapi/con-edison-intervalblock-api-openapi.yml"
+  ]
+}

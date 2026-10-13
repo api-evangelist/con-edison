@@ -1,44 +1,31 @@
 aid: con-edison
+
 url: https://raw.githubusercontent.com/api-evangelist/con-edison/refs/heads/main/apis.yml
+
 name: Con Edison
+
 kind: company
-description: >-
-  Consolidated Edison Company of New York, Inc. (CECONY, trading as Con Edison)
-  is the investor-owned electric, gas and steam utility that serves New York
-  City and Westchester County, and together with its sibling Orange & Rockland
-  Utilities (ORU) forms the regulated utility core of Consolidated Edison, Inc.
-  It is a wires-and-pipes distribution utility rather than a competitive
-  retailer: it owns and operates the distribution system, meters the customer
-  and bills the customer, while wholesale energy markets are run by NYISO and
-  competitive supply is sold by ESCOs. It is rate-regulated by the New York
-  State Public Service Commission. Its API posture is the most interesting in
-  the United States sample because both halves are real and they are gated
-  completely differently. On the consumer side Con Edison runs a genuine,
-  verified Green Button Connect My Data implementation — the NAESB REQ.21 ESPI
-  standard, branded "Share My Data" — with a live production base URI at
-  https://api.coned.com/gbc/espi/1_1 that answers anonymously with HTTP 401
-  "Unauthorized. Access token is missing or invalid.", a publicly downloadable
-  37-path Swagger 2.0 definition ("DCX GBC API V2"), a public Postman
-  collection titled "GBC Certification Third party V3.3", OAuth 2.0
-  authorization-code and client-credentials flows, ESPI functional-block
-  scopes, batch and real-time interval endpoints, and a 35-page technical
-  onboarding document last revised 2026-05-07. The United States has no
-  federal energy consumer data right; Con Edison's adoption sits under New York
-  PSC supervision (the Joint Utilities DSIP proceeding, Case 16-M-0411, in
-  which it committed to implement the first phase of GBC by end of 2017, the
-  Data Access Framework in Case 20-M-0082, and a Customer Data Access Tariff)
-  rather than under a statutory mandate like Australia's Consumer Data Right or
-  Ontario Regulation 633/21. That data is not self-serve: a third party must
-  register, sign a Data Security Agreement, submit a technical onboarding form
-  and pass 30 to 60 days of supervised testing before production credentials
-  are issued, and Con Edison states plainly that it "is unable to support API
-  development for third parties." On the market side, by contrast, Con Edison
-  publishes distribution-grid data openly and anonymously: the Hosting Capacity
-  Map documents REST API access, and its ArcGIS feature services for segmented
-  and network hosting capacity, EV transformer capacity, 33kV feeders,
-  non-wires-solutions networks and disadvantaged communities all answer
-  unauthenticated. Open on the grid, accredited on the customer — that split is
-  the finding.
+
+description: 'Consolidated Edison Company of New York, Inc. (CECONY, trading as Con Edison) is the investor-owned electric, gas and steam utility
+  that serves New York City and Westchester County, and together with its sibling Orange & Rockland Utilities (ORU) forms the regulated utility
+  core of Consolidated Edison, Inc. It is a wires-and-pipes distribution utility rather than a competitive retailer: it owns and operates the
+  distribution system, meters the customer and bills the customer, while wholesale energy markets are run by NYISO and competitive supply is sold
+  by ESCOs. It is rate-regulated by the New York State Public Service Commission. Its API posture is the most interesting in the United States
+  sample because both halves are real and they are gated completely differently. On the consumer side Con Edison runs a genuine, verified Green
+  Button Connect My Data implementation — the NAESB REQ.21 ESPI standard, branded "Share My Data" — with a live production base URI at https://api.coned.com/gbc/espi/1_1
+  that answers anonymously with HTTP 401 "Unauthorized. Access token is missing or invalid.", a publicly downloadable 37-path Swagger 2.0 definition
+  ("DCX GBC API V2"), a public Postman collection titled "GBC Certification Third party V3.3", OAuth 2.0 authorization-code and client-credentials
+  flows, ESPI functional-block scopes, batch and real-time interval endpoints, and a 35-page technical onboarding document last revised 2026-05-07.
+  The United States has no federal energy consumer data right; Con Edison''s adoption sits under New York PSC supervision (the Joint Utilities
+  DSIP proceeding, Case 16-M-0411, in which it committed to implement the first phase of GBC by end of 2017, the Data Access Framework in Case
+  20-M-0082, and a Customer Data Access Tariff) rather than under a statutory mandate like Australia''s Consumer Data Right or Ontario Regulation
+  633/21. That data is not self-serve: a third party must register, sign a Data Security Agreement, submit a technical onboarding form and pass
+  30 to 60 days of supervised testing before production credentials are issued, and Con Edison states plainly that it "is unable to support API
+  development for third parties." On the market side, by contrast, Con Edison publishes distribution-grid data openly and anonymously: the Hosting
+  Capacity Map documents REST API access, and its ArcGIS feature services for segmented and network hosting capacity, EV transformer capacity,
+  33kV feeders, non-wires-solutions networks and disadvantaged communities all answer unauthenticated. Open on the grid, accredited on the customer
+  — that split is the finding.'
+
 deliveryModel:
   model: saas
   open_source: false
@@ -51,6 +38,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: free
   onboarding: application-approval
@@ -64,13 +52,12 @@ accessModel:
   - authentication
   generated: '2026-07-27'
   method: manual
-imageNote: >-
-  The `image` property was removed on 2026-08-26. It had been copied verbatim out of a
-  bootstrap template and pointed at an icon belonging to groq, not to this company.
-  That asset returns HTTP 200, so the record rendered another company's brand
-  rather than a broken image, which is why it went unreported (roadmap#153).
-  No correct icon has been sourced yet. Shipping the wrong company's mark is worse
-  than shipping none; re-run the icon backfill once a real asset exists.
+
+imageNote: The `image` property was removed on 2026-08-26. It had been copied verbatim out of a bootstrap template and pointed at an icon belonging
+  to groq, not to this company. That asset returns HTTP 200, so the record rendered another company's brand rather than a broken image, which
+  is why it went unreported (roadmap#153). No correct icon has been sourced yet. Shipping the wrong company's mark is worse than shipping none;
+  re-run the icon backfill once a real asset exists.
+
 tags:
 - Energy
 - United States
@@ -89,23 +76,105 @@ tags:
 - Solar
 - EV Charging
 - Demand Response
+
 created: '2026-07-27'
+
 modified: '2026-10-06'
+
 specificationVersion: '0.23'
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
+common:
+- type: Spectral
+  url: rules/con-edison-rules.yml
+- type: JSONLD
+  url: json-ld/con-edison-context.jsonld
+- type: Vocabulary
+  url: vocabulary/con-edison-vocabulary.yml
+- type: Hosts
+  url: hosts/con-edison-hosts.yml
+- type: Newsroom
+  url: https://www.coned.com/en/about-us/media-center/news
+- type: RateLimits
+  url: rate-limits/con-edison-rate-limits.yml
+- url: https://www.coned.com/en/about-us/media-center/news
+  type: Blog
+- type: Overlay
+  url: overlays/con-edison-green-button-connect-my-data-overlay.yaml
+- type: X-MCPServerCandidate
+  url: mcp/con-edison-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+    API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+    the artifact-type surfaces with a server that does not exist.'
+- type: AgenticAccess
+  url: agentic-access/con-edison-agentic-access.yml
+- type: DomainSecurity
+  url: security/con-edison-domain-security.yml
+- type: AgentSkill
+  url: skills/_index.yml
+  name: Packaged agent skills for Green Button Connect My Data and the open grid data
+  name: No first-party SDKs; one community Python package recorded
+- type: DeveloperPortal
+  url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  name: Become a Third Party — the Share My Data developer-facing portal (not self-serve)
+- type: Support
+  url: mailto:dlsharemydatatech@coned.com
+  name: Share My Data technical onboarding and production-issue support
+- type: Website
+  url: https://www.coned.com/
+- type: About
+  url: https://www.coned.com/en/about-us/company-information
+- type: ParentCompany
+  url: https://www.conedison.com/
+- type: Documentation
+  url: https://www.coned.com/en/business-partners/access-customer-data
+- type: Documentation
+  url: https://www.coned.com/en/accounts-billing/share-energy-usage-data
+- type: Documentation
+  url: https://www.coned.com/en/save-money/make-better-energychoices-with-green-button
+  name: Green Button Download My Data
+- type: SignUp
+  url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+- type: Authentication
+  url: https://www.coned.com/en/accounts-billing/dashboard
+- type: TermsOfService
+  url: https://www.coned.com/en/accounts-billing/dashboard/billing-and-usage/terms-of-use
+- type: Email
+  url: mailto:dlsharemydatatech@coned.com
+  name: Share My Data technical onboarding team
+- type: LinkedIn
+  url: https://www.linkedin.com/company/con-edison
+- type: Regulator
+  url: https://dps.ny.gov/
+  name: New York State Department of Public Service / Public Service Commission
+- type: Standard
+  url: https://www.greenbuttonalliance.org/
+- type: Standard
+  url: https://www.naesb.org/espi_standards.asp
+- type: SisterCompany
+  url: https://www.oru.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
+  name: Orange & Rockland Utilities Green Button Connect My Data
+- type: Plans
+  url: plans/con-edison-plans-pricing.yml
+- type: FinOps
+  url: finops/con-edison-finops.yml
+- type: IntegrationEdges
+  url: integrations/con-edison-integration-edges.yml
+
 apis:
 - aid: con-edison:con-edison-hosting-capacity-map-rest-api
   name: Con Edison Hosting Capacity Map REST API
-  description: >-
-    Con Edison's distribution-grid open data, published as anonymously readable Esri ArcGIS REST feature
-    services behind the public Hosting Capacity Map. Con Edison's own documentation states that "REST
-    API access allows users to overlay the Con Edison Hosting Capacity Map data with their own GIS systems
-    and mapping tools" and that the endpoints are exposed on the map's "Rest API" tab. The services cover
-    CECONY and Orange & Rockland segmented and network hosting capacity for distributed generation, EV
-    load-serving transformer capacity, 33kV feeders, non-wires-solutions impacted networks, Locational
-    System Relief Value eligibility, disadvantaged and overburdened communities, and the IEDR-facing hosting
-    capacity layers. No login, API key, or agreement is required; every service probed returned HTTP 200
-    unauthenticated. Con Edison states the data "is being provided for informational purposes only and
-    is not intended to be a substitute for the established interconnection application process."
+  description: Con Edison's distribution-grid open data, published as anonymously readable Esri ArcGIS REST feature services behind the public
+    Hosting Capacity Map. Con Edison's own documentation states that "REST API access allows users to overlay the Con Edison Hosting Capacity
+    Map data with their own GIS systems and mapping tools" and that the endpoints are exposed on the map's "Rest API" tab. The services cover
+    CECONY and Orange & Rockland segmented and network hosting capacity for distributed generation, EV load-serving transformer capacity, 33kV
+    feeders, non-wires-solutions impacted networks, Locational System Relief Value eligibility, disadvantaged and overburdened communities, and
+    the IEDR-facing hosting capacity layers. No login, API key, or agreement is required; every service probed returned HTTP 200 unauthenticated.
+    Con Edison states the data "is being provided for informational purposes only and is not intended to be a substitute for the established interconnection
+    application process."
   humanURL: https://www.coned.com/en/business-partners/hosting-capacity
   baseURL: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services
   tags:
@@ -131,24 +200,18 @@ apis:
   - type: Application
     url: https://experience.arcgis.com/experience/d9d758c7736b44909dc3781937ca2ed5
   - type: APIReference
-    url: >-
-      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_NodalHCV_Prod/FeatureServer
+    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_NodalHCV_Prod/FeatureServer
   - type: APIReference
-    url: >-
-      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_EVM_Prod/FeatureServer
+    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_EVM_Prod/FeatureServer
   - type: APIReference
-    url: >-
-      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CE_NWS_Networks_Prod/FeatureServer
+    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CE_NWS_Networks_Prod/FeatureServer
   - type: APIReference
-    url: >-
-      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_33Kv_Prod/FeatureServer
+    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/CECONY_33Kv_Prod/FeatureServer
   - type: APIReference
-    url: >-
-      https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/IEDR_CECONY/FeatureServer
+    url: https://services.arcgis.com/ciPnsNFi1JLWVjva/arcgis/rest/services/IEDR_CECONY/FeatureServer
 - aid: con-edison:con-edison-applicationinformation-api
   name: Con Edison Application Information API
-  description: >-
-    The ApplicationInformation API from Con Edison — 1 operation(s) for applicationinformation.
+  description: The ApplicationInformation API from Con Edison — 1 operation(s) for applicationinformation.
   humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   baseURL: https://api.coned.com/gbc/espi/1_1
   tags:
@@ -185,21 +248,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -243,25 +302,23 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
     url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
+  - type: JSONSchema
+    url: json-schema/con-edison-token-request-schema.json
 - aid: con-edison:con-edison-batch-api
   name: Con Edison Batch API
   description: The Batch API from Con Edison — 4 operation(s) for batch.
@@ -301,29 +358,24 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
     url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
 - aid: con-edison:con-edison-electricpowerusagesummary-api
   name: Con Edison Electric Power Usage Summary API
-  description: >-
-    The ElectricPowerUsageSummary API from Con Edison — 2 operation(s) for electricpowerusagesummary.
+  description: The ElectricPowerUsageSummary API from Con Edison — 2 operation(s) for electricpowerusagesummary.
   humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   baseURL: https://api.coned.com/gbc/espi/1_1
   tags:
@@ -360,21 +412,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -418,21 +466,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -476,21 +520,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -534,21 +574,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -592,21 +628,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -650,29 +682,24 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
     url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
 - aid: con-edison:con-edison-realtimeintervalblock-api
   name: Con Edison Real Time Interval Block API
-  description: >-
-    The RealTimeIntervalBlock API from Con Edison — 2 operation(s) for realtimeintervalblock.
+  description: The RealTimeIntervalBlock API from Con Edison — 2 operation(s) for realtimeintervalblock.
   humanURL: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   baseURL: https://api.coned.com/gbc/espi/1_1
   tags:
@@ -709,21 +736,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -767,21 +790,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -825,21 +844,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -883,21 +898,17 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
@@ -941,89 +952,37 @@ apis:
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
   - type: Documentation
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
   - type: FAQ
-    url: >-
-      https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
+    url: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/faq.pdf
   - type: SignUp
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
   - type: Documentation
     url: https://www.coned.com/en/business-partners/access-customer-data
   - type: Documentation
     url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data
   - type: Documentation
-    url: >-
-      https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
+    url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/share-my-data/share-my-data-faq
   - type: Standard
     url: https://www.naesb.org/espi_standards.asp
   - type: Standard
     url: https://www.greenbuttonalliance.org/green-button-connect-my-data-cmd
-common:
-- type: RateLimits
-  url: rate-limits/con-edison-rate-limits.yml
-- url: https://www.coned.com/en/about-us/media-center/news
-  type: Blog
-- type: Overlay
-  url: overlays/con-edison-green-button-connect-my-data-overlay.yaml
-- type: X-MCPServerCandidate
-  url: mcp/con-edison-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
-- type: AgenticAccess
-  url: agentic-access/con-edison-agentic-access.yml
-- type: DomainSecurity
-  url: security/con-edison-domain-security.yml
-- type: AgentSkill
-  url: skills/_index.yml
-  name: Packaged agent skills for Green Button Connect My Data and the open grid data
-- type: Packages
-  url: packages/con-edison-packages.yml
-  name: No first-party SDKs; one community Python package recorded
-- type: LLMsTxt
-  url: llms/con-edison-llms.txt
-- type: DeveloperPortal
-  url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
-  name: Become a Third Party — the Share My Data developer-facing portal (not self-serve)
-- type: Support
-  url: mailto:dlsharemydatatech@coned.com
-  name: Share My Data technical onboarding and production-issue support
-- type: Website
-  url: https://www.coned.com/
-- type: About
-  url: https://www.coned.com/en/about-us/company-information
-- type: ParentCompany
-  url: https://www.conedison.com/
-- type: Documentation
-  url: https://www.coned.com/en/business-partners/access-customer-data
-- type: Documentation
-  url: https://www.coned.com/en/accounts-billing/share-energy-usage-data
-- type: Documentation
-  url: https://www.coned.com/en/save-money/make-better-energychoices-with-green-button
+- aid: con-edison:green-button-download
   name: Green Button Download My Data
-- type: SignUp
-  url: https://www.coned.com/en/accounts-billing/share-energy-usage-data/become-a-third-party/registration-form
-- type: Authentication
-  url: https://www.coned.com/en/accounts-billing/dashboard
-- type: PrivacyPolicy
-  url: https://www.coned.com/en/conedison-privacy-statement
-- type: TermsOfService
-  url: https://www.coned.com/en/accounts-billing/dashboard/billing-and-usage/terms-of-use
-- type: Email
-  url: mailto:dlsharemydatatech@coned.com
-  name: Share My Data technical onboarding team
-- type: LinkedIn
-  url: https://www.linkedin.com/company/con-edison
-- type: Regulator
-  url: https://dps.ny.gov/
-  name: New York State Department of Public Service / Public Service Commission
-- type: Standard
-  url: https://www.greenbuttonalliance.org/
-- type: Standard
-  url: https://www.naesb.org/espi_standards.asp
-- type: SisterCompany
-  url: https://www.oru.com/en/accounts-billing/share-energy-usage-data/become-a-third-party
-  name: Orange & Rockland Utilities Green Button Connect My Data
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  tags:
+  - CSV
+  - Energy
+  - Green Button
+  - Self-Service
+  - Usage Data
+  - XML
+  humanURL: https://www.coned.com/en/save-money/make-better-energychoices-with-green-button
+  properties:
+  - url: https://www.coned.com/en/save-money/make-better-energychoices-with-green-button
+    type: Documentation
+  - url: https://www.coned.com/en/save-money/make-better-energychoices-with-green-button
+    type: GettingStarted
+  description: Customer-driven file export that lets Con Edison residential and small commercial accounts download up to one year of smart-meter
+    interval data as CSV or ESPI XML directly from the My Account portal. Useful for one-shot analytics, audits, and migrating data into third-party
+    tools without requiring an OAuth integration.
+  x-moved-from: consolidated-edison:green-button-download

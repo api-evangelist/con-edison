@@ -1,0 +1,105 @@
+generated: '2026-10-13'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 9
+  own: 2
+  other_domain: 5
+  platform: 2
+  roles:
+  - api
+  - other
+  - website
+hosts:
+- host: api.coned.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: coned.com
+  role: api
+  relation: own
+- host: dps.ny.gov
+  found_by:
+  - pointer
+  types:
+  - Regulator
+  serves: []
+  registrable_domain: ny.gov
+  role: other
+  relation: other-domain
+- host: services.arcgis.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: arcgis.com
+  role: other
+  relation: platform
+- host: www.coned.com
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Blog
+  - DeveloperPortal
+  - Website
+  - About
+  - Documentation
+  - SignUp
+  - Authentication
+  - PrivacyPolicy
+  - TermsOfService
+  serves:
+  - docs
+  registrable_domain: coned.com
+  role: website
+  relation: own
+- host: www.conedison.com
+  found_by:
+  - pointer
+  types:
+  - ParentCompany
+  serves: []
+  registrable_domain: conedison.com
+  role: other
+  relation: other-domain
+- host: www.greenbuttonalliance.org
+  found_by:
+  - pointer
+  types:
+  - Standard
+  serves: []
+  registrable_domain: greenbuttonalliance.org
+  role: other
+  relation: other-domain
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: www.naesb.org
+  found_by:
+  - pointer
+  types:
+  - Standard
+  serves: []
+  registrable_domain: naesb.org
+  role: other
+  relation: other-domain
+- host: www.oru.com
+  found_by:
+  - pointer
+  types:
+  - SisterCompany
+  serves: []
+  registrable_domain: oru.com
+  role: other
+  relation: other-domain
