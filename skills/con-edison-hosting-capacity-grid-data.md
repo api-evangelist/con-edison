@@ -1,15 +1,11 @@
 ---
-name: Query Con Edison hosting capacity and grid data anonymously
+name: con-edison-hosting-capacity-grid-data
 description: Read Con Edison's open distribution-grid data — segmented and network hosting capacity, EV transformer capacity, 33kV feeders, non-wires-solutions networks — straight from the public ArcGIS REST feature services, with no key and no agreement.
 api: Con Edison Hosting Capacity Map REST API
 generated: '2026-07-27'
 method: generated
 source: https://www.coned.com/en/business-partners/hosting-capacity/about
 verified: live anonymous probes of the feature services on 2026-07-27
-operations:
-  - GET /{service}/FeatureServer?f=json
-  - GET /{service}/FeatureServer/{layerId}?f=json
-  - GET /{service}/FeatureServer/{layerId}/query
 ---
 
 # Query Con Edison hosting capacity and grid data anonymously

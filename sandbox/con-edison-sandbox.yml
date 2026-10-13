@@ -1,6 +1,10 @@
 generated: '2026-07-27'
 method: searched
 source: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
+description: >-
+  Con Edison's supervised Green Button Connect My Data test environment (apit.coned.com), driven by the
+  onboarding team with emailed test credentials; a mandatory stage of third-party onboarding.
+docs: https://www.coned.com/-/media/files/coned/documents/accountandbilling/share-my-data/onboarding-doc.pdf
 api: Con Edison Green Button Connect My Data API
 self_serve: false
 summary: >-

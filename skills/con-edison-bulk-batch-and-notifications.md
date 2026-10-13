@@ -1,5 +1,5 @@
 ---
-name: Pull Con Edison usage in bulk with the Client Access Token and batch notifications
+name: con-edison-bulk-batch-and-notifications
 description: Mint a Third-Party Client Access Token with client_credentials, submit asynchronous Green Button batch requests across your whole authorized customer set, and consume the notification callback correctly.
 api: openapi/con-edison-green-button-connect-my-data-swagger.json
 generated: '2026-07-27'

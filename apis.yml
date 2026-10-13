@@ -88,6 +88,8 @@ maintainers:
   email: kin@apievangelist.com
 
 common:
+- type: PrivacyPolicy
+  url: https://www.coned.com/en/privacy-policy-and-notice
 - type: Spectral
   url: rules/con-edison-rules.yml
 - type: JSONLD

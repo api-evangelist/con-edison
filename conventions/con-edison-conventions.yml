@@ -23,6 +23,7 @@ media_types:
   namespaces:
     espi: http://naesb.org/espi
 idempotency:
+  coverage: none
   key_header: null
   supported: false
   note: >-

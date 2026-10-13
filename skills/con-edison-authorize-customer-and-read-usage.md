@@ -1,5 +1,5 @@
 ---
-name: Authorize a Con Edison customer and read their interval usage
+name: con-edison-authorize-customer-and-read-usage
 description: Run the Green Button Connect My Data OAuth 2.0 authorization-code flow for one Con Edison or Orange & Rockland customer, then walk the subscription down to interval readings.
 api: openapi/con-edison-green-button-connect-my-data-swagger.json
 generated: '2026-07-27'

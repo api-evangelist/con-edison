@@ -44,6 +44,7 @@ hosts:
   - pointer
   - apis[]
   types:
+  - Newsroom
   - Blog
   - DeveloperPortal
   - Website
@@ -51,7 +52,6 @@ hosts:
   - Documentation
   - SignUp
   - Authentication
-  - PrivacyPolicy
   - TermsOfService
   serves:
   - docs

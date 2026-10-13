@@ -1,5 +1,5 @@
 ---
-name: Read Con Edison billing summaries and retail customer records
+name: con-edison-billing-and-retail-customer
 description: Retrieve usage summaries with cost and walk the retail-customer chain — account, agreement, service location, meter — for an authorized Con Edison or Orange & Rockland customer.
 api: openapi/con-edison-green-button-connect-my-data-swagger.json
 generated: '2026-07-27'

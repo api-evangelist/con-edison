@@ -1,5 +1,5 @@
 ---
-name: Read Con Edison near-real-time electric interval readings
+name: con-edison-real-time-electric-readings
 description: Use the non-standard Green Button RealTime resource family for the last 24 hours of electric interval data, with the right expectations about latency and data quality.
 api: openapi/con-edison-green-button-connect-my-data-swagger.json
 generated: '2026-07-27'

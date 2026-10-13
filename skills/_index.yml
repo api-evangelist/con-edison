@@ -27,7 +27,3 @@ skills:
 - file: con-edison-hosting-capacity-grid-data.md
   name: Query Con Edison hosting capacity and grid data anonymously
   api: Con Edison Hosting Capacity Map REST API (ArcGIS REST feature services; no published contract)
-  operations:
-  - 'GET /{service}/FeatureServer?f=json'
-  - 'GET /{service}/FeatureServer/{layerId}?f=json'
-  - 'GET /{service}/FeatureServer/{layerId}/query'
