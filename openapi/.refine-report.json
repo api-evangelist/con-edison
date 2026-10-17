@@ -42,7 +42,7 @@
     "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: ServiceStatus",
     "con-edison-green-button-connect-my-data-swagger.json: declared missing tag: UsagePoint",
     "superseded outputs removed: con-edison-service-status-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 15 total)"
+    "apis.yml register: written (+1 apis, 16 total)"
   ],
   "skipped": [
     "con-edison-applicationinformation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
